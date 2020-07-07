@@ -14,7 +14,20 @@ export default [
         }),
       },
       {
+        path: parentRoute => `${parentRoute}/dev`,
+        exact: true,
+        component: generateAsyncRouteComponent({
+          loader: () => import('./all-todos'),
+        }),
+      },
+      {
         path: parentRoute => `${parentRoute}/all`,
+        component: generateAsyncRouteComponent({
+          loader: () => import('./all-todos'),
+        }),
+      },
+      {
+        path: parentRoute => `${parentRoute}/dev/all`,
         component: generateAsyncRouteComponent({
           loader: () => import('./all-todos'),
         }),
@@ -26,7 +39,19 @@ export default [
         }),
       },
       {
+        path: parentRoute => `${parentRoute}/dev/active`,
+        component: generateAsyncRouteComponent({
+          loader: () => import('./active-todos'),
+        }),
+      },
+      {
         path: parentRoute => `${parentRoute}/completed`,
+        component: generateAsyncRouteComponent({
+          loader: () => import('./completed-todos'),
+        }),
+      },
+      {
+        path: parentRoute => `${parentRoute}/dev/completed`,
         component: generateAsyncRouteComponent({
           loader: () => import('./completed-todos'),
         }),

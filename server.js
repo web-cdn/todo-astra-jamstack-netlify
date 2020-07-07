@@ -7,30 +7,22 @@ const App = require('./dist/index.server.bundle.js')
 const bodyParser = require('body-parser')
 const AWS = require('aws-sdk')
 const app = express()
+const cassandra = require('cassandra-driver');
 const template = fs.readFileSync(`${__dirname}/dist/index.html`, 'utf8') // stupid simple template.
 const port = process.env.SERVER_PORT || 3000
 const tableName = process.env.TODO_TABLE || 'todos'
-const eventQueueName = process.env.TODO_EVENT_QUEUE || 'todos-events'
-const awsRegion = process.env.AWS_REGION || 'eu-west-1'
-
-// Lazy initialize it later
-let eventQueueUrl = null
+const keyspaceName = process.env.ASTRA_KEYSPACE || 'todoapp'
+const awsRegion = process.env.AWS_REGION || 'us-east-1'
 
 // Set default region
 process.env.AWS_REGION = awsRegion
 AWS.config.update({ region: awsRegion })
-const SQS = new AWS.SQS({ apiVersion: '2012-11-05' })
-const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
-// These are loaded if you call POST /api/init
-const initialTodos = [
-  { id: 'ed0bcc48-bbbe-5f06-c7c9-2ccb0456ceba', title: 'Wake Up.', completed: true },
-  { id: '42582304-3c6e-311e-7f88-7e3791caf88c', title: 'Grab a brush and put a little makeup.', completed: true },
-  { id: '036af7f9-1181-fb8f-258f-3f06034c020f', title: 'Write a blog post.', completed: false },
-  { id: '1cf63885-5f75-8deb-19dc-9b6765deae6c', title: 'Create a demo repository.', completed: false },
-  { id: '63a871b2-0b6f-4427-9c35-304bc680a4b7', title: '??????', completed: false },
-  { id: '63a871b2-0b6f-4422-9c35-304bc680a4b7', title: 'Profit.', completed: false },
-]
+//Astra C* client
+const client = new cassandra.Client({
+  cloud: { secureConnectBundle: process.env.ASTRA_SECURE_BUNDLE_ZIP },
+  credentials: { username: process.env.ASTRA_USERNAME, password: process.env.ASTRA_PASSWORD }
+});
 
 app.use(cors())
 app.use(bodyParser.json({ strict: false }))
@@ -48,73 +40,72 @@ app.use(express.static(`${__dirname}/dist`, { etag: false, index: false }))
 app.use('/assets', express.static(`${__dirname}/dist/assets`, { etag: false }))
 app.use('/css', express.static(`${__dirname}/dist/css`, { etag: false }))
 
-// Obtain record
-app.get('/api/todo/:id', function (req, res) {
-  console.log('Getting record id = ' + req.params.id)
-  dynamoDb.get({ TableName: tableName, Key: { id: req.params.id }}).promise().then((result) => {
-      if (result.Item) {
-        const { id, title, completed } = result.Item
-        res.json({ id, title, completed })
-      } else {
-        res.status(404).json({ error: 'Record not found id = ' + req.params.id })
-      }
-    }).catch(error => {
-      console.error('Failed to get record id = ' + req.params.id, error)
-      res.status(500).json({ error: 'Failed to get record id = ' + req.params.id })
+// Init Astra Table
+function initAstraDB(res, callback) {
+  console.log('Initializing Astra DB', tableName)
+
+    client.execute("CREATE TABLE IF NOT EXISTS " + keyspaceName + "." + tableName +
+      "(list_id text, id timeuuid, title text, completed boolean, PRIMARY KEY(list_id, id)) " +
+      "WITH CLUSTERING ORDER BY (id DESC)"
+    )
+    .then(() => client.execute("TRUNCATE " + keyspaceName + "." + tableName))
+    .then(() => {
+      if (res) res.status(200).json("Created\n")
     })
-})
-
-app.delete('/api/todo/:id', function (req, res) {
-  console.log('Deleting ', req.params.id)
-  dynamoDb.delete({ TableName: tableName, Key: { id: req.params.id }}).promise().then(() => {
-      res.json({ deleted: req.params.id })
-    }).catch(error => {
-      console.error('Failed to delete', error)
-      res.status(500).json({ error: 'Failed to delete: ' + JSON.stringify(error) })
+    .catch (error => {
+      console.error('Failed to get records', error)
+      if (res) res.status(500).json({ error: 'Failed to get records: ' + JSON.stringify(error) })
+      if (callback) callback()
     })
-})
-
-// Clear DynamodDB
-function initDynamoDB(res, callback) {
-  console.log('Initializing DynamoDB', tableName)
-  dynamoDb.scan({ TableName: tableName }).promise().then(result => {
-    // All promises to delete
-    let del = []
-    if (result.Items && result.Items.length > 0) {
-      del = result.Items.map(it => dynamoDb.delete({ TableName: tableName, Key: { id: it.id }}).promise())
-    }    
-
-    // Wait for delete
-    console.log('Deleting ' + del.length + ' records')
-    Promise.all(del).then(() => {
-      console.log('Deleted ' + del.length + ' records')
-      // Wait for create
-      console.log('Adding ' + initialTodos.length + ' records')
-      const add = initialTodos.map(it => dynamoDb.put({ TableName: tableName, Item: it }).promise())
-      Promise.all(add).then(() => {
-        console.log('Added ' + initialTodos.length + ' records')
-        if (res) res.json({ count: add.length })
-        if (callback) callback()
-      }).catch(console.error)
-    }).catch(console.error)
-  }).catch (error => {
-    console.error('Failed to get records', error)
-    if (res) res.status(500).json({ error: 'Failed to get records: ' + JSON.stringify(error) })
-    if (callback) callback()
-  })
 }
 
-// Clear DynamoDB
 app.post('/api/init', function (req, res) {
-  initDynamoDB(res)
+  initAstraDB(res)
 })
 
+// Obtain record
+app.get('/api/todo/:list_id/:id', function (req, res) {
+  console.log('Getting record id = ' + req.params.id)
+
+  client.execute("SELECT * from " + keyspaceName + "." + tableName + " where list_id=? and id=?", 
+                 [req.params.list_id, req.params.id],
+                 {prepare: true})
+  .then(result => {
+    if (result.rows && result.rows.length > 0) {
+      const { id, title, completed } = result.first()
+      res.json({ id, title, completed })
+    } else {
+      res.status(404).json({ error: 'Record not found id = ' + req.params.id })
+    }
+  }).catch(error => {
+    console.error('Failed to get record id = ' + req.params.id, error)
+    res.status(500).json({ error: 'Failed to get record id = ' + req.params.id })
+  })
+})
+
+app.delete('/api/todo/:list_id/:id', function (req, res) {
+  console.log('Deleting ', req.params.id)
+  client.execute("DELETE from " + keyspaceName + "." + tableName + " where list_id=? and id=?",
+                 [req.params.list_id, req.params.id],
+                 {prepare: true})
+  .then(() => res.json({deleted: req.params.id}))
+  .catch(error => {
+    console.error('Failed to delete', error)
+    res.status(500).json({ error: 'Failed to delete: ' + JSON.stringify(error) })
+  })
+})
+
+
 // List all records
-app.get('/api/todo', function (req, res) {
+app.get('/api/todo/:list_id', function (req, res) {
   console.time('todo-scan')
-  dynamoDb.scan({ TableName: tableName }).promise().then(result => {
-    if (result.Items && result.Items.length > 0) {
-      const all = result.Items.map(item => {
+
+  client.execute("SELECT * from " + keyspaceName + "." + tableName + " where list_id=?", 
+                 [req.params.list_id],
+                 {prepare: true})
+  .then(result => {
+    if (result.rows && result.rows.length > 0) {
+      const all = result.rows.map(item => {
         return { id, title, completed } = item 
       })
       res.json(all)
@@ -123,13 +114,13 @@ app.get('/api/todo', function (req, res) {
     }
     console.timeEnd('todo-scan')
   }).catch(error => {
-    console.log('Failed to get records', error)
+    console.log('Failed to get records:' + req.params.list_id , error)
     res.status(500).json({ error: 'Failed to get records: ' + JSON.stringify(error) })
   })
 })
 
 // Add new record
-app.post('/api/todo', async function (req, res) {
+app.post('/api/todo/:list_id', async function (req, res) {
   console.log('Adding new todo', req.body)
   let { id, title, completed } = req.body
   if (typeof id !== 'string') {
@@ -143,54 +134,19 @@ app.post('/api/todo', async function (req, res) {
 
   completed = !!completed // convert to boolean
 
-  const params = {
-    TableName: tableName,
-    Item: {
-      id, title, completed
-    },
-  }
-
-  if (title.startsWith('!')) {
-    const msg = title.substring(1)
-    if (eventQueueUrl == null) {
-      console.log(`Looking for queue url: ${eventQueueName}`)
-      await SQS.getQueueUrl({ QueueName: eventQueueName }).promise().then(result => { 
-        eventQueueUrl = result.QueueUrl
-        console.log(`Got todo event queue url: ${eventQueueUrl}`)
-      }).catch(console.error)
-    }
-
-    console.log(`Sending message to ${eventQueueUrl}: ${msg}`)
-    SQS.sendMessage({ QueueUrl: eventQueueUrl, MessageBody: msg }).promise().
-      then(console.log).
-      catch(console.error)
-      res.json({ ok: 'ok' })
-  } else {
-    dynamoDb.put(params).promise().then(result => {
-      res.json({ id, title, completed })
-    }).catch(error => {
-      console.log('Cant add record: ' + JSON.stringify(params.Item), error)
-      res.status(500).json({ error: 'Cant add record: ' + JSON.stringify(params.Item) })
-    })
-  }
-})
-
-app.get('/api/queue', async (req, res) => {
-  if (eventQueueUrl == null) {
-    console.log(`Looking for queue url: ${eventQueueName}`)
-    await SQS.getQueueUrl({ QueueName: eventQueueName }).promise().then(result => {
-      eventQueueUrl = result.QueueUrl
-      console.log(`Got todo event queue url: ${eventQueueUrl}`)
-    }).catch(console.error)
-  }
-
-  SQS.receiveMessage({ QueueUrl: eventQueueUrl }).promise().then(result => {
-    res.json(result)
-  }).catch(console.error)
+  client.execute("INSERT INTO " + keyspaceName + "." + tableName + "(list_id, id, title, completed)VALUES(?,?,?,?)",
+                 [req.params.list_id, id, title, completed],
+                 {prepare: true})
+  .then(result => {
+    res.json({ id, title, completed })
+  }).catch(error => {
+    console.log('Cant add record: ', error)
+    res.status(500).json({ error: 'Cant add record: '})
+  })
 })
 
 // Update existing record
-app.post('/api/todo/:id', function (req, res) {
+app.post('/api/todo/:list_id/:id', function (req, res) {
   let { id, title, completed } = req.body
   if (typeof id !== 'string') {
     res.status(400).json({ error: 'id must be a string: ' + JSON.stringify(req.body) })
@@ -206,21 +162,14 @@ app.post('/api/todo/:id', function (req, res) {
 
   completed = !!completed // convert to boolean
 
-  const params = {
-    TableName: tableName,
-    Key: {
-      id: req.params.id,
-    },
-    Item: {
-      id, title, completed
-    }
-  }
-
-  dynamoDb.put(params).promise().then(_ => {
+  client.execute("INSERT INTO " + keyspaceName + "." + tableName + "(list_id, id, title, completed)VALUES(?,?,?,?)",
+                 [req.params.list_id, id, title, completed],
+                 {prepare: true})
+  .then(result => {
     res.json({ id, title, completed })
   }).catch(error => {
-    console.log('Failed to update record id = ' + req.params.id, error)
-    res.status(500).json({ error: 'Failed to update record id = ' + req.params.id })
+    console.log('Cant add record: ', error)
+    res.status(500).json({ error: 'Cant add record: '})
   })
 })
 
@@ -294,40 +243,3 @@ module.exports.serverless = serverless(app, {
     console.log(`<-- ${statusCode} ${statusMessage} ${method} ${url} Δ ${elapsed}ms`)
   }
 })
-
-/**
- * Subscribed to SQS, returns event in the form of
- * {
- *  Records: [
- *    {
- *      messageId: 'fec4fd9f-1a09-4449-8e1a-6e379dca4d2b',
- *      receiptHandle: 'base64-encoded-something',
- *      body: 'dasdsa',
- *      attributes: {},
- *      messageAttributes: {},
- *      md5OfBody: '7c1cadb6887373dacb595c47166bfbd9',
- *      eventSource: 'aws:sqs',
- *      eventSourceARN: 'arn:aws:sqs:eu-west-1:666123456:todos-events',
- *      awsRegion: 'eu-west-1'
- *  ]
- * }
- */
-module.exports.receiveEvent = handler = function (event, context, callback) {
-  if (event && event.Records) {
-    console.log(`Got ${event.Records.length} events`)
-    event.Records.forEach(event => {
-      console.log('Got event: ', JSON.stringify(event))
-      if (event.body == 'reset') {
-        initDynamoDB(null, _ => {
-          callback(null, 'Processing complete')
-        })
-      } else {
-        console.error('Unknown event: ' + event.body)
-      }
-    })
-  }
-
-  // If you successfully invoke callback, all sent message will be deleted automatically
-  // WARNING: If you call it BEFORE all async code is done, it will be ignored
-  callback(null, 'Event processing complete')
-}

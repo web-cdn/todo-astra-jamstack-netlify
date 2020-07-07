@@ -68,7 +68,7 @@ const clientConfig = {
     // During the build make literal replacements on client side for 
     // process.env.API_URL, because there is no process.env
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify(process.env.API_URL || "http://localhost:3000/api") 
+      'process.env.API_URL': JSON.stringify(process.env.API_URL || ((process.env.PUBLIC_PATH || "") + "/api")) 
     }),
   ]
 };

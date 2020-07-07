@@ -4,22 +4,24 @@ import { Link } from 'react-router-dom';
 import utils from './utils';
 import enums from './enums';
 
+const PUBLIC_PATH = process.env.PUBLIC_PATH || window.location.pathname
 
 export default function Footer(props) {
   const activeTodoWord = utils.pluralize(props.count, 'item');
-  const { nowShowing } = props;
+  const { nowShowing, sessionId } = props;
   return (
     <footer className="footer">
+      
       <span className="todo-count">
         <strong>{props.count}</strong> {activeTodoWord} left
       </span>
       <ul className="filters">
         <li>
           <Link
-            to="/all"
+            to={PUBLIC_PATH + "/all"}
             className={
               classNames({
-                selected: nowShowing !== enums.ACTIVE_TODOS && nowShowing !== enums.COMPLETED_TODOS,
+                selected: !nowShowing.endsWith(enums.ACTIVE_TODOS) && !nowShowing.endsWith(enums.COMPLETED_TODOS),
               })
             }
           >
@@ -29,8 +31,8 @@ export default function Footer(props) {
         {' '}
         <li>
           <Link
-            to="/active"
-            className={classNames({ selected: nowShowing === enums.ACTIVE_TODOS })}
+            to={PUBLIC_PATH + "/active"}
+            className={classNames({ selected: nowShowing.endsWith(enums.ACTIVE_TODOS) })}
           >
             Active
           </Link>
@@ -38,8 +40,8 @@ export default function Footer(props) {
         {' '}
         <li>
           <Link
-            to="/completed"
-            className={classNames({ selected: nowShowing === enums.COMPLETED_TODOS })}
+            to={PUBLIC_PATH + "/completed"}
+            className={classNames({ selected: nowShowing.endsWith(enums.COMPLETED_TODOS) })}
           >
               Completed
           </Link>
@@ -53,6 +55,9 @@ export default function Footer(props) {
           :
           null
       }
+      <div className="session">
+        <a href={PUBLIC_PATH + "?session-id=" + sessionId} target="_blank">Share session</a>
+      </div>
     </footer>
   );
 }

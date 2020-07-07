@@ -1,12 +1,10 @@
 /* global localStorage */
+
+import uuid from 'node-uuid'
+
 export default {
   uuid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+    return uuid.v1()
   },
 
   pluralize(count, word) {
@@ -20,8 +18,8 @@ export default {
       }
 
       const store = localStorage.getItem(namespace);
-      return (store && JSON.parse(store)) || [];
+      return (store && JSON.parse(store)) || null;
     }
-    return [];
+    return null;
   },
 };

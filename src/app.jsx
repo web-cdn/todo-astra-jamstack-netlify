@@ -28,7 +28,7 @@ class TodoApp extends React.Component {
   deleteTodo(todo) {
     console.log("Deleting", todo);
     this.loading(1)
-    return fetch(API_URL + "/todo/" + todo.id, { method: "DELETE" }).
+    return fetch(API_URL + "/todo/" + this.state.sessionId + "/" + todo.id, { method: "DELETE" }).
       then(res => res.json()).then(response => {
         console.log("Got delete response: ", response);
         this.loading(-1)
@@ -41,7 +41,7 @@ class TodoApp extends React.Component {
     }
     console.log("Adding", todo);
     this.loading(1)
-    return fetch(API_URL + "/todo", { method: "POST", 
+    return fetch(API_URL + "/todo/" + this.state.sessionId, { method: "POST", 
         headers: {
           "Content-Type": "application/json"
         },
@@ -56,7 +56,7 @@ class TodoApp extends React.Component {
   updateTodo(todo) {
     console.log("Updating", todo);
     this.loading(1)
-    return fetch(API_URL + "/todo/" + todo.id, 
+    return fetch(API_URL + "/todo/" +this.state.sessionId + "/" + todo.id, 
       {
         method: "POST", 
         headers: {
@@ -73,7 +73,7 @@ class TodoApp extends React.Component {
   loadTodo() {
     console.log("Fetching all todos");
     this.loading(1)
-    return fetch(API_URL + "/todo").then(res => res.json()).then(todos => {
+    return fetch(API_URL + "/todo/" + this.state.sessionId).then(res => res.json()).then(todos => {
       console.log("Got all todos", todos);
       this.setState({ todos });
       this.loading(-1)
@@ -82,9 +82,19 @@ class TodoApp extends React.Component {
 
   componentDidMount() {
     // Reset initial loading
-    this.setState({ loading: 0 }, function () {
-      this.loadTodo()
-    })
+
+    const params = new URLSearchParams(window.location.search);
+    let sid = params.get('session-id') || utils.store("session-id")
+
+    if (!sid) {
+      sid = utils.uuid()
+      utils.store("session-id", sid)
+    }
+
+      console.log("Got Session: " + sid)
+      this.setState({loading: 0, sessionId: sid}, function () {
+          this.loadTodo() 
+      })
   }
 
   handleChange(event) {
@@ -172,6 +182,7 @@ class TodoApp extends React.Component {
           count={activeTodoCount}
           completedCount={completedCount}
           nowShowing={this.props.location.pathname}
+          sessionId={this.state.sessionId}
           onClearCompleted={() => { this.clearCompleted(); }}
         />);
     }
@@ -207,7 +218,7 @@ class TodoApp extends React.Component {
         <header className="header">
           <h1>
             <img src={Logo}/>
-            todos
+            Astra todos
             { this.state.loading > 0 ? <div className="spinner"></div> : <span/> }
           </h1>
           <input
@@ -220,7 +231,7 @@ class TodoApp extends React.Component {
           />
         </header>
         {main}
-        {footer}
+        {footer}        
       </div>
     );
   }

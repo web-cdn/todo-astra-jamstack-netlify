@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:gdborton/rrv4-ssr-and-code-splitting.git"
+    "url": "git+ssh://git@github.com:tjake/rrv4-ssr-and-code-splitting.git"
   },
   "keywords": [
     "code",
@@ -46,7 +46,9 @@
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",
     "serverless-http": "^1.6.0",
-    "swearjar": "^0.2.0"
+    "swearjar": "^0.2.0",
+    "cassandra-driver": "^4.5.2",
+    "node-uuid": "^1.4.8"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

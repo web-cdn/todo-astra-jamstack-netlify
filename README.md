@@ -1,6 +1,4 @@
-# Code Splitting + SSR + Serverless + DynamoDB with React Router demo
-
-Forked from https://github.com/gdborton/rrv4-ssr-and-code-splitting.
+# Code Splitting + SSR + Serverless + DataStax Astra  with React Router demo
 
 This is a demo repository set up to demo code splitting by route on React Router 
 with server rendered React components.
@@ -14,40 +12,44 @@ Before running the demo, you must install a number of components
   * AWS cli &amp; proper credentials
   * servlerless (`npm install -g serverless`)
 
-Also, either create DynamoDB table manually or execute first time deploy: 
-
-```bash
-npm run sls:deploy
-```
-
-## Running the demo
-
-```bash
-git clone https://github.com/huksley/todo-react-ssr-serverless
-cd todo-react-ssr-serverless
-npm install
-npm run build
-AWS_REGION=eu-west-1 npm start
-open http://localhost:3000
-```
-
-## Running in serverless local
-
-Runs `serverless offline` with webpack support.
-
-```bash
-npm run sls
-```
+Also, create [DataStax Astra](http://astra.datastax.com) Cassandra database: 
+    
+  * To keep allow defaults to work name cluster and keyspace `tododemo`
+  * Download secure bundle to local astra directory 
 
 ## Running in AWS
 
-Creates DynamoDB table, IAM role, deploys Lambda and sets up API Gateway. If custom domain specified, deploys app under this custom domain (first deploy might take some time)
+Deploys Lambda and sets up API Gateway. If custom domain specified, deploys app under this custom domain (first deploy might take some time)
 
 ```bash
-npm run sls:deploy
+PUBLIC_PATH=/dev/ \
+ASTRA_USERNAME=tododemo \
+ASTRA_PASSWORD=****** \
+run sls:deploy
 ```
 
-For proper paths, you __MUST__ define custom domain.
+To initialize/clear the Astra C* Database:
+
+ `curl -X POST https://{deployed_endpoint}/api/init`
+
+## Running locally
+
+```bash
+git clone https://github.com/tjake/todo-react-serverless-astra
+cd todo-react-serverless-astra
+npm install
+npm run build
+ASTRA_USERNAME=tododemo \
+ASTRA_PASSWORD=******** \
+ASTRA_npm start
+```
+
+To initialize/clear the Astra C* Database:
+ 
+ `curl -X POST https://localhost:3000/api/init`
+
+
+### Running in AWS with a Custom Domain
 
   * Create/transfer yourdomain.com in/to Route53
   * Verify yourdomain.com ownership
@@ -70,13 +72,6 @@ PUBLIC_PATH=https://s3-eu-west-1.amazonaws.com/todocdn.yourdomain.com/ \
   API_URL=https://todo.yourdomain.com/api \
   npm run sls:deploy
 ```
-
-## Isomorphic!
-
-Thanks to matchRoutes/renderRoutes from `react-router-config` after HTML is received, route state are restored and 
-all links start to work client side. 
-
-FIXME: This isomorphic/universal stuff should be updated according to recent improvements in react-router.
 
 ![todo](./todo.png)
 
