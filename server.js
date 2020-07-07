@@ -11,8 +11,11 @@ const cassandra = require('cassandra-driver');
 const template = fs.readFileSync(`${__dirname}/dist/index.html`, 'utf8') // stupid simple template.
 const port = process.env.SERVER_PORT || 3000
 const tableName = process.env.TODO_TABLE || 'todos'
-const keyspaceName = process.env.ASTRA_KEYSPACE || 'todoapp'
+const keyspaceName = process.env.ASTRA_KEYSPACE || 'todolist'
 const awsRegion = process.env.AWS_REGION || 'us-east-1'
+const secureBundle = process.env.ASTRA_SECURE_BUNDLE_ZIP || '/opt/secure-connect-todolist.zip'
+const astraUser = process.env.ASTRA_USERNAME || 'todolist'
+const astraPassword = process.env.ASTRA_PASSWORD || 'todolist'
 
 // Set default region
 process.env.AWS_REGION = awsRegion
@@ -20,8 +23,8 @@ AWS.config.update({ region: awsRegion })
 
 //Astra C* client
 const client = new cassandra.Client({
-  cloud: { secureConnectBundle: process.env.ASTRA_SECURE_BUNDLE_ZIP },
-  credentials: { username: process.env.ASTRA_USERNAME, password: process.env.ASTRA_PASSWORD }
+  cloud: { secureConnectBundle: secureBundle},
+  credentials: { username: astraUser, password: astraPassword }
 });
 
 app.use(cors())
@@ -50,7 +53,7 @@ function initAstraDB(res, callback) {
     )
     .then(() => client.execute("TRUNCATE " + keyspaceName + "." + tableName))
     .then(() => {
-      if (res) res.status(200).json("Created\n")
+      if (res) res.status(200).json("Created")
     })
     .catch (error => {
       console.error('Failed to get records', error)

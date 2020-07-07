@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import utils from './utils';
 import enums from './enums';
 
-const PUBLIC_PATH = process.env.PUBLIC_PATH || window.location.pathname
+const PUBLIC_PATH = process.env.PUBLIC_PATH || (typeof window !== 'undefined' ? window.location.pathname : '')
 
 export default function Footer(props) {
   const activeTodoWord = utils.pluralize(props.count, 'item');

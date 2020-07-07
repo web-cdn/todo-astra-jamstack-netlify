@@ -16,14 +16,30 @@ provider:
   timeout: 6
   # optional, default is true
   versionFunctions: false
+  # IAM custom roles
+  iamRoleStatements:
+    # Allow access to CloudWatch logs for lambdas in role
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource:
+        - 'Fn::Join':
+          - ':'
+          -
+            - 'arn:aws:logs'
+            - Ref: 'AWS::Region'
+            - Ref: 'AWS::AccountId'
+            - 'log-group:/aws/lambda/*:*:*'
   # Define additional env vars for deployment
   environment:
     TODO_TABLE: ${self:custom.todoTable}
     API_URL: ${self:custom.apiUrlByCustomDomain.${env:CUSTOM_DOMAIN_ENABLED, 'false'}}
-    ASTRA_SECURE_BUNDLE_ZIP: ${env:ASTRA_SECURE_BUNDLE_ZIP, '/opt/secure-connect-docshread.zip'}
-    ASTRA_KEYSPACE: ${env:ASTRA_KEYSPACE, 'docshread'}
-    ASTRA_USERNAME: ${env:ASTRA_USERNAME, 'docshread'}
-    ASTRA_PASSWORD: ${env:ASTRA_PASSWORD, 'docshread'}
+    ASTRA_SECURE_BUNDLE_ZIP: ${env:ASTRA_SECURE_BUNDLE_ZIP, '/opt/secure-connect-todolist.zip'}
+    ASTRA_KEYSPACE: ${env:ASTRA_KEYSPACE, 'todolist'}
+    ASTRA_USERNAME: ${env:ASTRA_USERNAME, 'todolist'}
+    ASTRA_PASSWORD: ${env:ASTRA_PASSWORD, 'todolist'}
     PUBLIC_PATH: ${env:PUBLIC_PATH}, ''}
 custom:
   todoTable: 'todos'
