@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import utils from './utils';
 import enums from './enums';
 
-const PUBLIC_PATH = process.env.PUBLIC_PATH || (typeof window !== 'undefined' ? window.location.pathname : '')
+const PUBLIC_PATH = process.env.PUBLIC_PATH || (typeof window !== 'undefined' ? window.location.pathname : '/')
 
 export default function Footer(props) {
   const activeTodoWord = utils.pluralize(props.count, 'item');
@@ -18,7 +18,7 @@ export default function Footer(props) {
       <ul className="filters">
         <li>
           <Link
-            to={PUBLIC_PATH + "/all"}
+            to={PUBLIC_PATH + "all"}
             className={
               classNames({
                 selected: !nowShowing.endsWith(enums.ACTIVE_TODOS) && !nowShowing.endsWith(enums.COMPLETED_TODOS),
@@ -31,7 +31,7 @@ export default function Footer(props) {
         {' '}
         <li>
           <Link
-            to={PUBLIC_PATH + "/active"}
+            to={PUBLIC_PATH + "active"}
             className={classNames({ selected: nowShowing.endsWith(enums.ACTIVE_TODOS) })}
           >
             Active
@@ -40,7 +40,7 @@ export default function Footer(props) {
         {' '}
         <li>
           <Link
-            to={PUBLIC_PATH + "/completed"}
+            to={PUBLIC_PATH + "completed"}
             className={classNames({ selected: nowShowing.endsWith(enums.COMPLETED_TODOS) })}
           >
               Completed
