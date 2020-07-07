@@ -6,6 +6,8 @@ using a [DataStax Astra](https://astra.datastax.com) free tier database for stor
 This project uses the [DataStax NodeJS Cassandra Driver](https://github.com/datastax/nodejs-driver) 
 and in [AWS Lambda](https://aws.amazon.com/lambda) with server rendered React components.
 
+![todo](./todo.png)
+
 ## Preparing for demo
 
 Before running the demo, you must install a number of components
@@ -79,7 +81,13 @@ PUBLIC_PATH=https://s3-eu-west-1.amazonaws.com/todocdn.yourdomain.com/ \
   npm run sls:deploy
 ```
 
-![todo](./todo.png)
+### Removing from AWS
+
+When you want to remove all AWS resources for this demo:
+
+```
+npm run sls:remove
+```
 
 ## Things of note:
 

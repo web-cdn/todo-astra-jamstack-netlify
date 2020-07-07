@@ -10,11 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sls": "sls",
     "sls:dev": "webpack && sls offline --dontPrintOutput",
-    "sls:deploy": "webpack && sls deploy"
+    "sls:deploy": "webpack && sls deploy",
+    "sls:remove": "sls remove"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:tjake/rrv4-ssr-and-code-splitting.git"
+    "url": "git+ssh://git@github.com:tjake/todo-astra-react-serverless.git"
   },
   "keywords": [
     "code",
