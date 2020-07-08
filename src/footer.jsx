@@ -59,7 +59,7 @@ export default function Footer(props) {
           null
       }
       <div className="session">
-        <a href={PUBLIC_PATH + "?session-id=" + sessionId} target="_blank">Share session</a>
+        <a href={PUBLIC_PATH + "?session-id=" + sessionId} target="_blank">Share This List</a>
       </div>
     </footer>
   );
