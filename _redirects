@@ -1,3 +1,1 @@
-[[redirects]]
-  from = "/api"
-  to = "https://2e210d2b-bb7b-4c4e-b2bb-98df1baff4a5-us-east1.apps.astra.datastax.com"
+/api https://2e210d2b-bb7b-4c4e-b2bb-98df1baff4a5-us-east1.apps.astra.datastax.com
