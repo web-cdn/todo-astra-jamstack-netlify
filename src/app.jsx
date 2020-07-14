@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { renderRoutes } from 'react-router-config';
 import TodoFooter from './footer';
 import utils from './utils';
@@ -18,7 +19,8 @@ class TodoApp extends React.Component {
       editing: null,
       newTodo: '',
       todos: [],
-      loading: 1
+      loading: 1,
+      authToken: ''
     };
   }
 
@@ -26,31 +28,24 @@ class TodoApp extends React.Component {
     this.setState({ loading: this.state.loading + inc })
   }
 
-  auth() {
+  authAndLoadTodo() {
     console.log("Auth");
     this.loading(1)
-    return fetch(API_URL + "/auth" , 
+    return fetch(API_URL + "/auth" ,
       { 
           "headers": {
             "accept": "*/*",
-            "accept-language": "en-US,en;q=0.9,es-CO;q=0.8,es;q=0.7",
-            "cache-control": "no-cache",
             "content-type": "application/json",
-            "pragma": "no-cache",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "x-cassandra-request-id": "X-Cassandra-Request-Id",
-            "x-readme-api-explorer": "6.14.0"
           },
           "body": "{\"username\":\"datastax\",\"password\":\"datastax\"}",
           "method": "POST",
-          "mode": "cors"
       }).
       then(res => res.json()).then(response => {
         console.log("Got auth response: ", response);
+        this.setState( response );
         this.loading(-1)
-      }).catch(err => { this.loading(-1); console.error("Failed auth", err) })
+        this.loadTodo()
+      }).catch(err => { this.loading(-1); console.error("Failed auth", err) });
 
   }
 
@@ -68,13 +63,18 @@ class TodoApp extends React.Component {
     if (todo.id === undefined) {
       todo.id = utils.uuid();
     }
+    todo["list_id"] =  this.state.sessionId;
     console.log("Adding", todo);
     this.loading(1)
-    return fetch(API_URL + "/todo/" + this.state.sessionId, { method: "POST", 
+    var columns = { "columns": Object.keys(todo).map(i => {return {"name": i, "value":todo[i] }}) };
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/" , { method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          "x-cassandra-request-id": "bla",
+          "x-cassandra-token": this.state.authToken,
         },
-        body: JSON.stringify(todo)
+        body: JSON.stringify(columns)
       }).
       then(res => res.json()).then(response => {
         console.log("Got add response: ", response);
@@ -102,8 +102,16 @@ class TodoApp extends React.Component {
   loadTodo() {
     console.log("Fetching all todos");
     this.loading(1)
-    return fetch(API_URL + "/todo/" + this.state.sessionId).then(res => res.json()).then(todos => {
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/" + this.state.sessionId, {
+        "headers": {
+          "x-cassandra-request-id": "bla",
+          "x-cassandra-token": this.state.authToken,
+        }
+      }).then(res => res.json()).then(todos => {
       console.log("Got all todos", todos);
+      if (JSON.stringify(todos).includes("no row found for primary key")){
+        todos = [];
+      }
       this.setState({ todos });
       this.loading(-1)
     }).catch(err => { this.loading(-1); console.error("Failed fetching todos", err) })
@@ -120,11 +128,17 @@ class TodoApp extends React.Component {
       utils.store("session-id", sid)
     }
 
-      console.log("Got Session: " + sid)
-      this.setState({loading: 0, sessionId: sid}, function () {
-          this.auth() 
-          this.loadTodo() 
-      })
+    console.log("Got Session: " + sid)
+
+
+    this.setState(
+        {
+          loading: 0, sessionId: sid
+        },
+        function () {
+          this.authAndLoadTodo()
+        },
+    )
   }
 
   handleChange(event) {
@@ -155,8 +169,8 @@ class TodoApp extends React.Component {
 
   toggleAll(event) {
     const { checked } = event.target;
-    Promise.all(this.state.todos.map(todo => 
-      this.updateTodo(Object.assign({}, todo, { completed: checked })))).then(() => {
+    Promise.all(this.state.todos.map(todo =>
+        this.updateTodo(Object.assign({}, todo, { completed: checked })))).then(() => {
       this.loadTodo();
     })
   }
@@ -208,61 +222,61 @@ class TodoApp extends React.Component {
 
     if (activeTodoCount || completedCount) {
       footer =
-        (<TodoFooter
-          count={activeTodoCount}
-          completedCount={completedCount}
-          nowShowing={this.props.location.pathname}
-          sessionId={this.state.sessionId}
-          onClearCompleted={() => { this.clearCompleted(); }}
-        />);
+          (<TodoFooter
+              count={activeTodoCount}
+              completedCount={completedCount}
+              nowShowing={this.props.location.pathname}
+              sessionId={this.state.sessionId}
+              onClearCompleted={() => { this.clearCompleted(); }}
+          />);
     }
 
     if (todos.length) {
       main = (
-        <section className="main">
-          <input
-            className="toggle-all"
-            type="checkbox"
-            onChange={this.toggleAll}
-            checked={activeTodoCount === 0}
-          />
-          <ul className="todo-list">
-            {
-              renderRoutes(this.props.route.routes, {
-                todos,
-                onToggle: (todo) => { this.toggle(todo); },
-                onDestroy: (todo) => { this.destroy(todo); },
-                onEdit: (todo) => { this.edit(todo); },
-                editing: todo => this.state.editing === todo.id,
-                onSave: (todo, text) => { this.save(todo, text); },
-                onCancel: () => this.cancel(),
-              })
-            }
-          </ul>
-        </section>
+          <section className="main">
+            <input
+                className="toggle-all"
+                type="checkbox"
+                onChange={this.toggleAll}
+                checked={activeTodoCount === 0}
+            />
+            <ul className="todo-list">
+              {
+                renderRoutes(this.props.route.routes, {
+                  todos,
+                  onToggle: (todo) => { this.toggle(todo); },
+                  onDestroy: (todo) => { this.destroy(todo); },
+                  onEdit: (todo) => { this.edit(todo); },
+                  editing: todo => this.state.editing === todo.id,
+                  onSave: (todo, text) => { this.save(todo, text); },
+                  onCancel: () => this.cancel(),
+                })
+              }
+            </ul>
+          </section>
       );
     }
 
     return (
-      <div>
-        <header className="header">
-          <h1>
-            <img src={Logo}/>
-            Astra todos
-            { this.state.loading > 0 ? <div className="spinner"></div> : <span/> }
-          </h1>
-          <input
-            className="new-todo"
-            placeholder="What needs to be done?"
-            value={this.state.newTodo}
-            onKeyDown={(event) => { this.handleNewTodoKeyDown(event); }}
-            onChange={(event) => { this.handleChange(event); }}
-            autoFocus
-          />
-        </header>
-        {main}
-        {footer}        
-      </div>
+        <div>
+          <header className="header">
+            <h1>
+              <img src={Logo}/>
+              Astra todos
+              { this.state.loading > 0 ? <div className="spinner"></div> : <span/> }
+            </h1>
+            <input
+                className="new-todo"
+                placeholder="What needs to be done?"
+                value={this.state.newTodo}
+                onKeyDown={(event) => { this.handleNewTodoKeyDown(event); }}
+                onChange={(event) => { this.handleChange(event); }}
+                autoFocus
+            />
+          </header>
+          {main}
+          {footer}
+        </div>
     );
   }
 }
