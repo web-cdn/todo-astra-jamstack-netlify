@@ -52,11 +52,21 @@ class TodoApp extends React.Component {
   deleteTodo(todo) {
     console.log("Deleting", todo);
     this.loading(1)
-    return fetch(API_URL + "/todo/" + this.state.sessionId + "/" + todo.id, { method: "DELETE" }).
+    var columns = { "columns": Object.keys(todo).map(i => {return {"name": i, "value":todo[i] }}) };
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/"+ this.state.sessionId , { method: "DELETE",
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          "x-cassandra-request-id": "bla",
+          "x-cassandra-token": this.state.authToken,
+        },
+        body: JSON.stringify(columns)
+      }).
       then(res => res.json()).then(response => {
         console.log("Got delete response: ", response);
         this.loading(-1)
       }).catch(err => { this.loading(-1); console.error("Failed deleting todo", err) })
+
   }
 
   addTodo(todo) {
@@ -83,20 +93,7 @@ class TodoApp extends React.Component {
   }
 
   updateTodo(todo) {
-    console.log("Updating", todo);
-    this.loading(1)
-    return fetch(API_URL + "/todo/" +this.state.sessionId + "/" + todo.id, 
-      {
-        method: "POST", 
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(todo) 
-      }).
-      then(res => res.json()).then(response => {
-        console.log("Got update response: ", response);
-        this.loading(-1)
-      }).catch(err => { this.loading(-1); console.error("Failed updating todo", err) })
+    return this.addTodo(todo);
   }
 
   loadTodo() {
