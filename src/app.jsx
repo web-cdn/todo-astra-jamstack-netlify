@@ -7,7 +7,8 @@ import swearjar from 'swearjar';
 import { Logo } from '../assets';
 
 const ENTER_KEY = 13;
-const API_URL = process.env.API_URL || "http://localhost:3000/api";
+//const API_URL = "https://2e210d2b-bb7b-4c4e-b2bb-98df1baff4a5-us-east1.apps.astra.datastax.com/api/rest/v1";
+const API_URL = "/api/rest/v1";
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -23,6 +24,34 @@ class TodoApp extends React.Component {
 
   loading(inc) {
     this.setState({ loading: this.state.loading + inc })
+  }
+
+  auth() {
+    console.log("Auth");
+    this.loading(1)
+    return fetch(API_URL + "/auth" , 
+      { 
+          "headers": {
+            "accept": "*/*",
+            "accept-language": "en-US,en;q=0.9,es-CO;q=0.8,es;q=0.7",
+            "cache-control": "no-cache",
+            "content-type": "application/json",
+            "pragma": "no-cache",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "x-cassandra-request-id": "X-Cassandra-Request-Id",
+            "x-readme-api-explorer": "6.14.0"
+          },
+          "body": "{\"username\":\"datastax\",\"password\":\"datastax\"}",
+          "method": "POST",
+          "mode": "cors"
+      }).
+      then(res => res.json()).then(response => {
+        console.log("Got auth response: ", response);
+        this.loading(-1)
+      }).catch(err => { this.loading(-1); console.error("Failed auth", err) })
+
   }
 
   deleteTodo(todo) {
@@ -93,6 +122,7 @@ class TodoApp extends React.Component {
 
       console.log("Got Session: " + sid)
       this.setState({loading: 0, sessionId: sid}, function () {
+          this.auth() 
           this.loadTodo() 
       })
   }

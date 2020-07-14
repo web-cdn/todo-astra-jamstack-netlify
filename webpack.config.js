@@ -70,7 +70,15 @@ const clientConfig = {
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(process.env.API_URL || ((process.env.PUBLIC_PATH || "") + "/api")) 
     }),
-  ]
+  ],
+  devServer: {
+    proxy: {
+       "/api": {
+         "target": 'https://2e210d2b-bb7b-4c4e-b2bb-98df1baff4a5-us-east1.apps.astra.datastax.com',
+         "changeOrigin": true
+       }
+    }
+  }
 };
 
 const serverConfig = {
