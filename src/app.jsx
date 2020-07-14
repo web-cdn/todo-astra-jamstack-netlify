@@ -53,14 +53,13 @@ class TodoApp extends React.Component {
     console.log("Deleting", todo);
     this.loading(1)
     var columns = { "columns": Object.keys(todo).map(i => {return {"name": i, "value":todo[i] }}) };
-    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/"+ this.state.sessionId , { method: "DELETE",
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/"+ this.state.sessionId + ";" + todo.id, { method: "DELETE",
         headers: {
           "accept": "*/*",
           "Content-Type": "application/json",
           "x-cassandra-request-id": "bla",
           "x-cassandra-token": this.state.authToken,
-        },
-        body: JSON.stringify(columns)
+        }
       }).
       then(res => res.json()).then(response => {
         console.log("Got delete response: ", response);
@@ -99,7 +98,7 @@ class TodoApp extends React.Component {
   loadTodo() {
     console.log("Fetching all todos");
     this.loading(1)
-    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/" + this.state.sessionId, {
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/" + this.state.sessionId , {
         "headers": {
           "x-cassandra-request-id": "bla",
           "x-cassandra-token": this.state.authToken,
