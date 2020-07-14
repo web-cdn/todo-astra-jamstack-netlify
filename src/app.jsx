@@ -45,7 +45,7 @@ class TodoApp extends React.Component {
         this.setState( response );
         this.loading(-1)
         this.loadTodo()
-      }).catch(err => { this.loading(-1); console.error("Failed auth", err) });
+      }).catch(err => { this.loading(-1); console.error("Failed uth", err) });
 
   }
 
@@ -67,7 +67,7 @@ class TodoApp extends React.Component {
     console.log("Adding", todo);
     this.loading(1)
     var columns = { "columns": Object.keys(todo).map(i => {return {"name": i, "value":todo[i] }}) };
-    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows/" , { method: "POST",
+    return fetch(API_URL + "/keyspaces/free/tables/todolist/rows" , { method: "POST",
         headers: {
           "accept": "*/*",
           "Content-Type": "application/json",
@@ -111,6 +111,8 @@ class TodoApp extends React.Component {
       console.log("Got all todos", todos);
       if (JSON.stringify(todos).includes("no row found for primary key")){
         todos = [];
+      }else{
+        todos = todos.rows;
       }
       this.setState({ todos });
       this.loading(-1)
