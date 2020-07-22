@@ -4,15 +4,8 @@
   "description": "Isomorphic TodoMVC example in ReactJS with Serverless and DynamoDB",
   "main": "server.js",
   "scripts": {
-    "lint": "eslint ./src",
-    "start": "webpack && node ./server.js",
     "build": "webpack",
-    "dev": "webpack-dev-server --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sls": "sls",
-    "sls:dev": "webpack && sls offline --dontPrintOutput",
-    "sls:deploy": "webpack && sls deploy",
-    "sls:remove": "sls remove"
+    "dev": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
