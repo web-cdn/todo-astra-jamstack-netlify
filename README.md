@@ -1,7 +1,7 @@
 # JAMStack + Netlify + DataStax Astra + Apache Cassandra with React Router demo
 
 This is a demo repository set up to a Serverless react based todo application
-using a [DataStax Astra](https://astra.datastax.com) free tier database for storage in AWS. 
+using a [DataStax Astra](https://astra.datastax.com/register) free tier database for storage in AWS. 
 
 The project interacts directly with the database from the react based frontend application and can be deployed on Netlify for free with a few clicks.
 
@@ -9,7 +9,7 @@ The project interacts directly with the database from the react based frontend a
 
 ## Pre-reqs
 
-Create [DataStax Astra](http://astra.datastax.com) Cassandra database (free tier): 
+Create [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier): 
     
   * To keep allow defaults to work name cluster and keyspace `tododemo` 
 
