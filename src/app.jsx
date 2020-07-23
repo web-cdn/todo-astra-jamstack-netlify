@@ -76,7 +76,7 @@ class TodoApp extends React.Component {
     if (!todo.id) {
       todo.id = utils.uuid();
     }
-    todo["list_id"] =  this.state.sessionId;
+    todo['list_id'] =  this.state.sessionId;
     this.loading(1);
     const columns = {
       columns: Object.keys(todo).map(i => {
@@ -89,9 +89,8 @@ class TodoApp extends React.Component {
     return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows` , {
       method: 'POST',
         headers: {
-          "accept": "*/*",
-          "Content-Type": "application/json",
-          "x-cassandra-token": this.state.authToken,
+          'Content-Type': 'application/json',
+          'x-cassandra-token': this.state.authToken,
         },
         body: JSON.stringify(columns)
       }).
@@ -99,7 +98,7 @@ class TodoApp extends React.Component {
         this.loading(-1)
       }).catch(err => {
         this.loading(-1);
-        console.error("Failed adding todo", err);
+        console.error('Failed adding todo', err);
       });
   }
 
@@ -115,7 +114,7 @@ class TodoApp extends React.Component {
       }
     }).then(res => res.json())
       .then(todos => {
-        if (JSON.stringify(todos).includes("no row found for primary key")) {
+        if (JSON.stringify(todos).includes('no row found for primary key')) {
           todos = [];
         } else {
           todos = todos.rows;
@@ -124,7 +123,7 @@ class TodoApp extends React.Component {
         this.loading(-1)
       }).catch(err => {
         this.loading(-1);
-        console.error("Failed fetching todos", err);
+        console.error('Failed fetching todos', err);
       });
   }
 
@@ -132,11 +131,11 @@ class TodoApp extends React.Component {
     // Reset initial loading
 
     const params = new URLSearchParams(window.location.search);
-    let sid = params.get('session-id') || utils.store("session-id")
+    let sid = params.get('session-id') || utils.store('session-id');
 
     if (!sid) {
       sid = utils.uuid()
-      utils.store("session-id", sid)
+      utils.store('session-id', sid)
     }
     this.setState(
         {
