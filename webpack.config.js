@@ -1,9 +1,6 @@
-const Dotenv = require('dotenv-webpack');
-require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const fs = require('fs');
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
@@ -12,8 +9,8 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
-if (!process.env.ASTRA_ENDPOINT && !fs.existsSync('.env')) {
-  throw new Error('No .env file or ASTRA_ENDPOINT set');
+if (!process.env.ASTRA_ENDPOINT) {
+  throw new Error('No ASTRA_ENDPOINT set');
 }
 
 const clientConfig = {
@@ -52,9 +49,6 @@ const clientConfig = {
   },
   resolve,
   plugins: [
-    new Dotenv({
-      path: '.env'
-    }),
     // Copy all used resources (no dir available)
     new CopyWebpackPlugin([
       { from: "assets", to: "assets" },
@@ -77,7 +71,10 @@ const clientConfig = {
     // During the build make literal replacements on client side for
     // process.env.API_URL, because there is no process.env
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify(process.env.API_URL || ((process.env.PUBLIC_PATH || "") + "/api")) 
+      'process.env.ASTRA_ENDPOINT': JSON.stringify(process.env.ASTRA_ENDPOINT),
+      'process.env.ASTRA_DB_USERNAME': JSON.stringify(process.env.ASTRA_DB_USERNAME),
+      'process.env.ASTRA_DB_PASSWORD': JSON.stringify(process.env.ASTRA_DB_PASSWORD),
+      'process.env.ASTRA_DB_KEYSPACE': JSON.stringify(process.env.ASTRA_DB_KEYSPACE)
     }),
   ],
   devServer: {
