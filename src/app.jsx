@@ -3,7 +3,6 @@ import { renderRoutes } from 'react-router-config';
 import TodoFooter from './footer';
 import utils from './utils';
 import fetch from 'cross-fetch';
-import swearjar from 'swearjar';
 import { Logo } from '../assets';
 import {
   ASTRA_DB_USERNAME,
@@ -163,7 +162,7 @@ class TodoApp extends React.Component {
     if (val) {
       this.addTodo({
         id: utils.uuid(),
-        title: swearjar.censor(val),
+        title: val,
         completed: false
       }).then(() => {
         this.loadTodo().then(() => {
@@ -196,7 +195,7 @@ class TodoApp extends React.Component {
   }
 
   save(todo, text) {
-    this.updateTodo(Object.assign({}, todo, { title: swearjar.censor(text) }))
+    this.updateTodo(Object.assign({}, todo, { title: text }))
         .then(() => {
           this.loadTodo().then(() => this.setState({ editing: null }));
         })
