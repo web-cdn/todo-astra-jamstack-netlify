@@ -1,7 +1,7 @@
 image: gitpod/workspace-full
 tasks:
   - before: ./gitpod-setup.sh
-  - init: yarn install
+    init: yarn install
     command: yarn build
 ports:
   - port: 8080
