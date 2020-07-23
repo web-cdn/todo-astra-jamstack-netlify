@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server --mode development"
+    "dev": "webpack-dev-server --mode development",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",

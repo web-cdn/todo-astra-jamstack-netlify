@@ -8,9 +8,8 @@ The project interacts directly with the database from the React frontend and can
 ## Getting started
 1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier).
 2. Clone this repo: `git clone https://github.com/phact/todo-astra-jamstack-netlify`.
-3. Create a `.env` file simple to the example `.env.sample` file (with your own Astra credentials).
-4. Install Node dependencies: `npm install`.
-5. Build the app: `npm run dev`.
+3. Install Node dependencies: `npm install`.
+4. Build the app: `npm run dev`.
 
 ## Deploying to Netlify
 1. Create a [Netlify account](https://app.netlify.com/signup).

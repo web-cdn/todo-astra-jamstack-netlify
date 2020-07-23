@@ -3,4 +3,3 @@ dist/
 .webpack
 .serverless
 .idea/
-.env
