@@ -15,8 +15,8 @@ The project interacts directly with the database from the React frontend and can
 1. Create a [Netlify account](https://app.netlify.com/signup).
 2. Connect your sample GitHub application to Netlify.
 3. Your app will automatically deploy using the using the setting in [netlify.toml](netlify.toml).
+4. Set ASTRA_DB_USERNAME, ASTRA_DB_PASSWORD, ASTRA_DB_KEYSPACE, and ASTRA_ENDPOINT environment variables.
 
 ## Things of note:
  - The contents of this repo are based on [Jakes's port](https://github.com/tjake/todo-astra-react-serverless/) of the [TodoMVC code](https://github.com/tastejs/todomvc/tree/master/examples/react) originally written by [Pete Hunt](https://github.com/petehunt).
  - The example is modified from https://github.com/huksley/todo-react-ssr-serverless
- 
