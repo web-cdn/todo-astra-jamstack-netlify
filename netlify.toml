@@ -3,7 +3,7 @@
   command = "npm run build"
 
 [template.environment]
-  ASTRA_DB_USERNAME = "REPLACE ME"
-  ASTRA_DB_PASSWORD = "REPLACE ME"
-  ASTRA_DB_KEYSPACE = "REPLACE ME"
-  ASTRA_ENDPOINT = "REPLACE ME"
+  ASTRA_DB_USERNAME = "Your Astra DB Username"
+  ASTRA_DB_PASSWORD = "Your Astra DB Password"
+  ASTRA_DB_KEYSPACE = "Your Astra DB Keyspace"
+  ASTRA_ENDPOINT = "Your Astra DB Endpoint"
