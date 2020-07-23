@@ -19,7 +19,7 @@ ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/
 AUTH_TOKEN=$(curl --request POST \
   --url $ENDPOINT \
   --header 'content-type: application/json' \
-  --data '{"username":"'${ASTRA_DB_USERNAME}'","password":"'${ASTRA_DB_USERNAME}'"}'  | python -c "import sys, json; print json.load(sys.stdin)['authToken']")
+  --data '{"username":"'${ASTRA_DB_USERNAME}'","password":"'${ASTRA_DB_USERNAME}'"}'  | jq -r '.authToken')
 
 # Create todos table
 curl --request POST \
