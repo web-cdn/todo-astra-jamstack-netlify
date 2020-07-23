@@ -1,7 +1,4 @@
 #!/bin/sh
-gp env -u ASTRA_DB_USERNAME ASTRA_DB_PASSWORD ASTRA_DB_PASSWORD ASTRA_ENDPOINT
-echo "\n\n\n---------------"
-
 echo "What is your Astra DB username? 🚀"
 read ASTRA_DB_USERNAME
 echo "\nWhat is your Astra DB password? 🔒"
@@ -18,6 +15,7 @@ ASTRA_ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.co
 
 # Set GitPod.io environment variables
 eval $(gp env -e ASTRA_DB_USERNAME=$ASTRA_DB_USERNAME ASTRA_DB_PASSWORD=$ASTRA_DB_PASSWORD ASTRA_DB_KEYSPACE=$ASTRA_DB_KEYSPACE ASTRA_ENDPOINT=$ASTRA_ENDPOINT)
+eval $(gp env -e)
 
 # Get Astra auth token
 ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1/auth"
