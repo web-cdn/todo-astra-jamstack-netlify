@@ -31,7 +31,7 @@ class TodoApp extends React.Component {
   }
 
   authAndLoadTodo() {
-    this.loading(1)
+    this.loading(1);
     return fetch(`${API_ENDPOINT}/auth`, {
       method: 'POST',
       headers: {

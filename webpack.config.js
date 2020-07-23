@@ -1,4 +1,5 @@
 const Dotenv = require('dotenv-webpack');
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -73,7 +74,7 @@ const clientConfig = {
         }
       }
     ]),
-    // During the build make literal replacements on client side for 
+    // During the build make literal replacements on client side for
     // process.env.API_URL, because there is no process.env
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify(process.env.API_URL || ((process.env.PUBLIC_PATH || "") + "/api")) 
