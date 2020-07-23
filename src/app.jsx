@@ -10,6 +10,7 @@ import {
   ASTRA_DB_PASSWORD,
   ASTRA_DB_KEYSPACE,
   API_ENDPOINT,
+  TABLE_NAME,
   ENTER_KEY
 } from './config';
 
@@ -56,7 +57,7 @@ class TodoApp extends React.Component {
   deleteTodo(todo) {
     const { authToken } = this.state;
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/todos/rows/${todo.list_id};${todo.id}`, {
+    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${todo.list_id};${todo.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +86,7 @@ class TodoApp extends React.Component {
         }
       })
     };
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/todos/rows` , {
+    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows` , {
       method: 'POST',
         headers: {
           "accept": "*/*",
@@ -108,7 +109,7 @@ class TodoApp extends React.Component {
 
   loadTodo() {
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/todos/rows/${this.state.sessionId}` , {
+    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${this.state.sessionId}` , {
       headers: {
         'x-cassandra-token': this.state.authToken,
       }
