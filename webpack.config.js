@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -9,8 +10,8 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
-if (!process.env.ASTRA_ENDPOINT) {
-  throw new Error('An ASTRA_ENDPOINT env variable is required!');
+if (!process.env.ASTRA_ENDPOINT || !fs.existsSync('.env')) {
+  throw new Error('No .env file or ASTRA_ENDPOINT set');
 }
 
 const clientConfig = {
@@ -49,6 +50,9 @@ const clientConfig = {
   },
   resolve,
   plugins: [
+    new Dotenv({
+      path: '.env'
+    }),
     // Copy all used resources (no dir available)
     new CopyWebpackPlugin([
       { from: "assets", to: "assets" },
