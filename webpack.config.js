@@ -2,6 +2,7 @@ const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const fs = require('fs');
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
@@ -10,7 +11,7 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
-if (!process.env.ASTRA_ENDPOINT || !fs.existsSync('.env')) {
+if (!process.env.ASTRA_ENDPOINT && !fs.existsSync('.env')) {
   throw new Error('No .env file or ASTRA_ENDPOINT set');
 }
 
