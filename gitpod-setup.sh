@@ -12,7 +12,7 @@ echo "\nWhat is your Astra database region? Example: us-east1 🌍"
 read ASTRA_DB_REGION
 
 # Set GitPod.io environment variables
-eval $(gp env -e ASTRA_DB_USERNAME=$ASTRA_DB_USERNAME ASTRA_DB_PASSWORD=$ASTRA_DB_PASSWORD ASTRA_DB_KEYSPACE=$ASTRA_DB_KEYSPACE ASTRA_ENDPOINT=https://$ASTRA_DB_ID-$ASTRA_DB_REGIONapps.astra.datastax.com)
+eval $(gp env -e ASTRA_DB_USERNAME=$ASTRA_DB_USERNAME ASTRA_DB_PASSWORD=$ASTRA_DB_PASSWORD ASTRA_DB_KEYSPACE=$ASTRA_DB_KEYSPACE ASTRA_ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com")
 
 # Get Astra auth token
 ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1/auth"
