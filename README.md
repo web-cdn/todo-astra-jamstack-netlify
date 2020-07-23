@@ -5,14 +5,13 @@ using a [DataStax Astra](https://astra.datastax.com/register) free tier database
 
 The project interacts directly with the database from the React frontend and can be deployed on Netlify for free with a few clicks.
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify)
+
 ## Getting started
 1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier).
 2. Clone this repo: `git clone https://github.com/phact/todo-astra-jamstack-netlify`.
 3. Install Node dependencies: `npm install`.
 4. Build the app: `npm run dev`.
-
-## Running the app on GitPod:
-1. Start a GitPod workspace by clicking [this link](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify).
 
 ## Deploying to Netlify
 1. Create a [Netlify account](https://app.netlify.com/signup).
