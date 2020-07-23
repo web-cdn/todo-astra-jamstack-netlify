@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
@@ -50,24 +50,25 @@ const clientConfig = {
   resolve,
   plugins: [
     // Copy all used resources (no dir available)
-    new CopyWebpackPlugin([
-      { from: "assets", to: "assets" },
-      { from: "css", to: "css" },
-      { from: "public" },
-      { from: "index.html", to: "index.html", transform: (content) => {
-          if (process.env.PUBLIC_PATH) {
-            let path = process.env.PUBLIC_PATH;
-            if (path.endsWith("/")) {
-              path = path.substring(0, path.length - 1);
+    new CopyPlugin({
+      patterns: [
+        { from: "assets", to: "assets" },
+        { from: "css", to: "css" },
+        { from: "public" },
+        { from: "index.html", to: "index.html", transform: (content) => {
+            if (process.env.PUBLIC_PATH) {
+              let path = process.env.PUBLIC_PATH;
+              if (path.endsWith("/")) {
+                path = path.substring(0, path.length - 1);
+              }
+              return String(content).replace(/{{CDN}}/g, path);
+            } else {
+              // Don`t use CDN
+              return String(content).replace(/{{CDN}}\//g, "");
             }
-            return String(content).replace(/{{CDN}}/g, path);
-          } else {
-            // Don`t use CDN
-            return String(content).replace(/{{CDN}}\//g, "");
           }
         }
-      }
-    ]),
+      ]}),
     // During the build make literal replacements on client side for
     // process.env.API_URL, because there is no process.env
     new webpack.DefinePlugin({
@@ -79,10 +80,10 @@ const clientConfig = {
   ],
   devServer: {
     proxy: {
-       '/api': {
-         target: process.env.ASTRA_ENDPOINT,
-         changeOrigin: true
-       }
+      '/api': {
+        target: process.env.ASTRA_ENDPOINT,
+        changeOrigin: true
+      }
     }
   }
 };
