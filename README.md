@@ -18,13 +18,14 @@ npm install
 npm run build
 ```
 
-### Using GitPod
+## Using GitPod
 
 
 
-### Running in Netlify
-
-
+## Running on Netlify
+1. Create a [Netlify account](https://app.netlify.com/signup).
+2. Connect your sample GitHub application to Netlify.
+3. Your app will automatically deploy using the using the setting in [netlify.toml](netlify.toml).
 
 ## Things of note:
  - The contents of this repo are based on [Jakes's port](https://github.com/tjake/todo-astra-react-serverless/) of the [TodoMVC code](https://github.com/tastejs/todomvc/tree/master/examples/react) originally written by [Pete Hunt](https://github.com/petehunt).
