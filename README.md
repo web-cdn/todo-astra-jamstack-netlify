@@ -13,7 +13,6 @@ The project interacts directly with the database from the React frontend and can
 
 ## Running the app on GitPod:
 1. Start a GitPod workspace by clicking [this link](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify).
-2. Set GitPod environment variables: `gp env ASTRA_DB_USERNAME=REPLACE_ME ASTRA_DB_PASSWORD=REPLACE_ME ASTRA_DB_KEYSPACE=REPLACE_ME ASTRA_ENDPOINT=REPLACE_ME`
 
 ## Deploying to Netlify
 1. Create a [Netlify account](https://app.netlify.com/signup).
