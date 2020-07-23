@@ -2,7 +2,7 @@
 echo "What is your Astra DB username? 🚀"
 read ASTRA_DB_USERNAME
 echo "\nWhat is your Astra DB password? 🔒"
-read -s ASTRA_DB_PASSWORD
+read ASTRA_DB_PASSWORD
 echo "\nWhat is your Astra keyspace name? 🔑"
 read ASTRA_DB_KEYSPACE
 echo "\nWhat is your Astra database id? Example: 4e62bc79-0e12-4667-bd7d-2191ece2a32c ☁️"
