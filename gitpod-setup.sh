@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [[ -z "${ASTRA_DB_USERNAME}" ]]; then
   echo "What is your Astra DB username? 🚀"
   read -r ASTRA_DB_USERNAME
