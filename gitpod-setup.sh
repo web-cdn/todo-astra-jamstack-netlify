@@ -32,6 +32,8 @@ eval $(gp env -e ASTRA_DB_USERNAME=$ASTRA_DB_USERNAME ASTRA_DB_PASSWORD=$ASTRA_D
 # Get Astra auth token
 echo "Getting your Astra auth token..."
 ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1/auth"
+eval $(gp env -e ENDPOINT=$ENDPOINT)
+
 AUTH_TOKEN=$(curl --request POST \
   --url $ENDPOINT \
   --header 'content-type: application/json' \
