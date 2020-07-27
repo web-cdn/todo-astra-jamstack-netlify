@@ -11,7 +11,8 @@ The project interacts directly with the database from the React frontend and can
 1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier).
 2. Clone this repo: `git clone https://github.com/phact/todo-astra-jamstack-netlify`.
 3. Install Node dependencies: `npm install`.
-4. Build the app: `npm run dev`.
+4. Set `ASTRA_DB_USERNAME`, `ASTRA_DB_PASSWORD`, `ASTRA_DB_KEYSPACE`, `ASTRA_DB_ID`, and `ASTRA_DB_REGION` environment variables.
+5. Build the app: `npm run dev`.
 
 ## Things to note:
  - The contents of this repo are based on [Jakes's port](https://github.com/tjake/todo-astra-react-serverless/) of the [TodoMVC code](https://github.com/tastejs/todomvc/tree/master/examples/react) originally written by [Pete Hunt](https://github.com/petehunt).
