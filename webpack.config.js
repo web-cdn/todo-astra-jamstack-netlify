@@ -9,10 +9,6 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
-if (!process.env.ASTRA_ENDPOINT) {
-  throw new Error('No ASTRA_ENDPOINT set');
-}
-
 const clientConfig = {
   entry,
   target: 'web',
@@ -72,7 +68,6 @@ const clientConfig = {
     // During the build make literal replacements on client side for
     // process.env.API_URL, because there is no process.env
     new webpack.DefinePlugin({
-      'process.env.ASTRA_ENDPOINT': JSON.stringify(process.env.ASTRA_ENDPOINT),
       'process.env.ASTRA_DB_USERNAME': JSON.stringify(process.env.ASTRA_DB_USERNAME),
       'process.env.ASTRA_DB_PASSWORD': JSON.stringify(process.env.ASTRA_DB_PASSWORD),
       'process.env.ASTRA_DB_KEYSPACE': JSON.stringify(process.env.ASTRA_DB_KEYSPACE)
@@ -81,7 +76,7 @@ const clientConfig = {
   devServer: {
     proxy: {
       '/api': {
-        target: process.env.ASTRA_ENDPOINT,
+        target: `https://${process.env.ASTRA_DB_ID}-${process.env.ASTRA_DB_REGION}.apps.astra.datastax.com`,
         changeOrigin: true
       }
     }
