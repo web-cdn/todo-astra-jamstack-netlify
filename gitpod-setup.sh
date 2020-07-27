@@ -29,19 +29,17 @@ if [[ -z "$ASTRA_DB_REGION" ]]; then
   gp env ASTRA_DB_REGION="${ASTRA_DB_REGION}"
 fi
 
-gp env ASTRA_ENDPOINT="https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com"
-
 # Get Astra auth token
 echo "Getting your Astra auth token..."
 AUTH_TOKEN=$(curl --request POST \
-  --url "${ASTRA_ENDPOINT}/api/rest/v1/auth" \
+  --url "https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1/auth" \
   --header 'content-type: application/json' \
   --data '{"username":"'${ASTRA_DB_USERNAME}'","password":"'${ASTRA_DB_USERNAME}'"}' | jq -r '.authToken')
 
 # Create todos table
 echo "Creating Astra tables..."
 curl --request POST \
-  --url "${ASTRA_ENDPOINT}/api/rest/v1/keyspaces/${ASTRA_DB_KEYSPACE}/tables" \
+  --url "https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1/keyspaces/${ASTRA_DB_KEYSPACE}/tables" \
   --header 'content-type: application/json' \
   --header "x-cassandra-token: ${AUTH_TOKEN}" \
   --data '{"ifNotExists":true,"columnDefinitions":[{"static":false,"name":"list_id","typeDefinition":"text"},{"static":false,"name":"id","typeDefinition":"timeuuid"},{"static":false,"name":"title","typeDefinition":"text"},{"static":false,"name":"completed","typeDefinition":"boolean"}],"primaryKey":{"partitionKey":["list_id","id"]},"tableOptions":{"defaultTimeToLive":0,"clusteringExpression":[{"column":"id","order":"DESC"}]},"name":"todos"}'
