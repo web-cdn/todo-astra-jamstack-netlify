@@ -7,7 +7,8 @@ The project interacts directly with the database from the React frontend and can
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
 
 ## Getting started
-1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier).
+1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Clone this repo: `git clone https://github.com/phact/todo-astra-jamstack-netlify`.
 3. Install Node dependencies: `npm install`.
 4. Set `ASTRA_DB_USERNAME`, `ASTRA_DB_PASSWORD`, `ASTRA_DB_KEYSPACE`, `ASTRA_DB_ID`, and `ASTRA_DB_REGION` environment variables.
