@@ -10,6 +10,6 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "API_PLACEHOLDER"
+  to = "https://ASTRA_DB_ID-ASTRA_DB_REGION.apps.astra.datastax.com/"
   status = 301
   force = true
