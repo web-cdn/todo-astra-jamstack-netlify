@@ -9,6 +9,30 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
+const {
+  ASTRA_DB_USERNAME,
+  ASTRA_DB_PASSWORD,
+  ASTRA_DB_KEYSPACE,
+  ASTRA_DB_ID,
+  ASTRA_DB_REGION
+} = process.env;
+
+if (!ASTRA_DB_USERNAME) {
+  throw new Error('Missing required environment variable, ASTRA_DB_USERNAME');
+}
+if (!ASTRA_DB_PASSWORD) {
+  throw new Error('Missing required environment variable, ASTRA_DB_PASSWORD');
+}
+if (!ASTRA_DB_KEYSPACE) {
+  throw new Error('Missing required environment variable, ASTRA_DB_KEYSPACE');
+}
+if (!ASTRA_DB_ID) {
+  throw new Error('Missing required environment variable, ASTRA_DB_ID');
+}
+if (!ASTRA_DB_REGION) {
+  throw new Error('Missing required environment variable, ASTRA_DB_REGION');
+}
+
 const clientConfig = {
   entry,
   target: 'web',
