@@ -51,7 +51,7 @@ export default function Footer(props) {
         </li>
       </ul>
       {
-        props.completedCount ?
+        true ?
           <button className="clear-completed" onClick={props.onClearCompleted}>
             Clear
           </button>
