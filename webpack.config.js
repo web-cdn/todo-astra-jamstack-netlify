@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
@@ -70,6 +71,11 @@ const clientConfig = {
   resolve,
   plugins: [
     // Copy all used resources (no dir available)
+    new HtmlWebpackPlugin({
+        template: '!!ejs-webpack-loader!src/graphiql.ejs',
+        filename: 'graphiql/index.html',
+
+    }),
     new CopyPlugin({
       patterns: [
         { from: "assets", to: "assets" },
