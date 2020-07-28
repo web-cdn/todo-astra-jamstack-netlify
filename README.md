@@ -13,7 +13,8 @@ The project interacts directly with the database from the React frontend and can
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
 3. Enter a repository name and click repository from template:
 ![image](https://user-images.githubusercontent.com/3254549/88738761-42384800-d0ee-11ea-82e8-a2cd085b6f83.png)
-4. Clone the repository.
+4. Clone the repository:
+![image](https://user-images.githubusercontent.com/3254549/88739059-6e53c900-d0ee-11ea-9b25-56b2436a9817.png)
 5. Install Node dependencies: `npm install`.
 6. Set `ASTRA_DB_USERNAME`, `ASTRA_DB_PASSWORD`, `ASTRA_DB_KEYSPACE`, `ASTRA_DB_ID`, and `ASTRA_DB_REGION` environment variables.
 7. Build the app: `npm run dev`.
