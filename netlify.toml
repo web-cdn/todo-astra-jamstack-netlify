@@ -7,3 +7,9 @@
   ASTRA_DB_PASSWORD = "Your Astra DB Password"
   ASTRA_DB_KEYSPACE = "Your Astra DB Keyspace"
   ASTRA_ENDPOINT = "Your Astra DB Endpoint"
+
+[[redirects]]
+  from = "/api/*"
+  to = "API_PLACEHOLDER"
+  status = 301
+  force = true
