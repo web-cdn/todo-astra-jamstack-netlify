@@ -30,7 +30,7 @@ fi
 if [[ -z "$ASTRA_DB_REGION" ]]; then
   echo "What is your Astra database region? Example: us-east1 🌍"
   read -r ASTRA_DB_REGION
-  export ASTRA_DB_ID="${ASTRA_DB_ID}"
+  export ASTRA_DB_REGION="${ASTRA_DB_REGION}"
   gp env ASTRA_DB_REGION="${ASTRA_DB_REGION}"
 fi
 
