@@ -6,11 +6,11 @@ The project interacts directly with the database from the React frontend and can
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
 ## Getting Started Paths:
-1. [Run the app locally](#local)
-2. [Run the app is Gitpod](#gitpod)
+1. [Run the app locally](#getting-started---running-on-your-local-machine)
+2. [Run the app is Gitpod](#getting-started---running-on-gitpod)
 3. Deploy the app to Netlify
 
-### [Getting started - Running on your local machine](#local)
+### Getting started - Running on your local machine
 1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click use this template at the top of the README:
@@ -25,7 +25,7 @@ The project interacts directly with the database from the React frontend and can
 8. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
-### [Getting started - Running on Gitpod](#gitpod)
+### Getting started - Running on Gitpod
 1. Click the 'Open in Gitpod link':
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify)
 2. Wait for your Gitpod workspace to start:
