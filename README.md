@@ -31,6 +31,7 @@ The project interacts directly with the database from the React frontend and can
 2. Click the 'Open in Gitpod link':
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify)
+
 3. Wait for your Gitpod workspace to start:
 ![image](https://user-images.githubusercontent.com/3254549/88744125-5171c280-d0fb-11ea-9676-de4589e42589.png)
 4. Set your Astra credentials in the Gitpod terminal at the bottom of the screen:
