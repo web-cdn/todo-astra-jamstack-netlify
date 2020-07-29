@@ -26,37 +26,41 @@ The project interacts directly with the database from the React frontend and can
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
 ### Running on Gitpod
-1. Click the 'Open in Gitpod link':
+1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
+2. Click the 'Open in Gitpod link':
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify)
-2. Wait for your Gitpod workspace to start:
+3. Wait for your Gitpod workspace to start:
 ![image](https://user-images.githubusercontent.com/3254549/88744125-5171c280-d0fb-11ea-9676-de4589e42589.png)
-3. Set your Astra credentials in the Gitpod terminal at the bottom of the screen:
+4. Set your Astra credentials in the Gitpod terminal at the bottom of the screen:
 ![image](https://user-images.githubusercontent.com/3254549/88744148-64849280-d0fb-11ea-9b20-52d5226a14c6.png)
 You can find your database id here:
 ![image](https://user-images.githubusercontent.com/3254549/88744238-a1508980-d0fb-11ea-83fc-6efc6b370780.png)
-4. Click the 'Open browser' button in the bottom right of the screen:
+5. Click the 'Open browser' button in the bottom right of the screen:
 ![image](https://user-images.githubusercontent.com/3254549/88744346-ebd20600-d0fb-11ea-9853-cf370dfcf143.png)
-5. View your application:
+6. View your application:
 ![image](https://user-images.githubusercontent.com/3254549/88744380-04422080-d0fc-11ea-93a1-fe40854f428c.png)
 
 ### Deploying to Netlify
-1. Click the 'Deploy to Netlify' button:
+1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
+2. Click the 'Deploy to Netlify' button:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
-2. Connect your GitHub account:
+3. Connect your GitHub account:
 ![image](https://user-images.githubusercontent.com/3254549/88744656-d9a49780-d0fc-11ea-97ad-f05aa0ace11e.png)
-3. Fill in the Netlify environment variables with information on your Astra environment:
+4. Fill in the Netlify environment variables with information on your Astra environment:
 ![image](https://user-images.githubusercontent.com/3254549/88744704-fb9e1a00-d0fc-11ea-8d92-4182aed4499d.png)
 You can find your database id here:
 ![image](https://user-images.githubusercontent.com/3254549/88744238-a1508980-d0fb-11ea-83fc-6efc6b370780.png)
-4. Click 'Save and Deploy':
+5. Click 'Save and Deploy':
 ![image](https://user-images.githubusercontent.com/3254549/88744776-2c7e4f00-d0fd-11ea-8530-71e2a85e34a2.png)
-5. Wait for your app to deploy:
+6. Wait for your app to deploy:
 ![image](https://user-images.githubusercontent.com/3254549/88744798-3bfd9800-d0fd-11ea-8858-281bd0d4ff70.png)
-6. Click your Netlify app link to view your live app:
+7. Click your Netlify app link to view your live app:
 ![image](https://user-images.githubusercontent.com/3254549/88744822-4fa8fe80-d0fd-11ea-97dd-9f9611b332dc.png)
-7. You've deployed your app to Netlify!
+8. You've deployed your app to Netlify!
 ![image](https://user-images.githubusercontent.com/3254549/88744842-62233800-d0fd-11ea-8e20-29aa71027885.png)
 
 ### Things to Note:
