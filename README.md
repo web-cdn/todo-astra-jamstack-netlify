@@ -15,7 +15,7 @@ The project interacts directly with the database from the React frontend and can
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click 'Use this template' at the top of the README:
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
-3. Enter a repository name and click repository from template:
+3. Enter a repository name and click 'Create repository from template':
 ![image](https://user-images.githubusercontent.com/3254549/88738761-42384800-d0ee-11ea-82e8-a2cd085b6f83.png)
 4. Clone the repository:
 ![image](https://user-images.githubusercontent.com/3254549/88739059-6e53c900-d0ee-11ea-9b25-56b2436a9817.png)
