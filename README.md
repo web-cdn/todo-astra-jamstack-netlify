@@ -1,4 +1,4 @@
-# JAMStack + Netlify + Astra + Cassandra Example
+# JAMStack + Netlify + Astra + Cassandra Example 📒
 This is an example React Todo application
 using a [DataStax Astra](https://astra.datastax.com/register) free tier database.
 
