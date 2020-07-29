@@ -49,6 +49,7 @@ You can find your database id here:
 2. Click the 'Deploy to Netlify' button:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
+
 3. Connect your GitHub account:
 ![image](https://user-images.githubusercontent.com/3254549/88744656-d9a49780-d0fc-11ea-97ad-f05aa0ace11e.png)
 4. Fill in the Netlify environment variables with information on your Astra environment:
