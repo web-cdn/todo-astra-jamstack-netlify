@@ -6,11 +6,11 @@ The project interacts directly with the database from the React frontend and can
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
 ## Getting Started Paths:
-1. [Run the app locally](#getting-started---running-on-your-local-machine)
-2. [Run the app is Gitpod](#getting-started---running-on-gitpod)
-3. Deploy the app to Netlify
+1. [Run the app locally](#running-on-your-local-machine)
+2. [Run the app is Gitpod](#running-on-gitpod)
+3. [Deploy the app to Netlify](#deploying-to-netlify)
 
-### Getting started - Running on your local machine
+### Running on your local machine
 1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click use this template at the top of the README:
@@ -25,8 +25,9 @@ The project interacts directly with the database from the React frontend and can
 8. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
-### Getting started - Running on Gitpod
+### Running on Gitpod
 1. Click the 'Open in Gitpod link':
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/phact/todo-astra-jamstack-netlify)
 2. Wait for your Gitpod workspace to start:
 ![image](https://user-images.githubusercontent.com/3254549/88744125-5171c280-d0fb-11ea-9676-de4589e42589.png)
@@ -39,6 +40,10 @@ You can find your database id here:
 5. View your application:
 ![image](https://user-images.githubusercontent.com/3254549/88744380-04422080-d0fc-11ea-93a1-fe40854f428c.png)
 
+### Deploying to Netlify
+1. Click the 'Deploy to Netlify' button:
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/phact/todo-astra-jamstack-netlify)
 
 ### Things to Note:
  - The contents of this repo are based on [Jakes's port](https://github.com/tjake/todo-astra-react-serverless/) of the [TodoMVC code](https://github.com/tastejs/todomvc/tree/master/examples/react) originally written by [Pete Hunt](https://github.com/petehunt).
