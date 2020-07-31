@@ -29,18 +29,11 @@ Deploying a static web application on [Netlify](https://www.netlify.com/) allows
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
 3. Enter a repository name and click 'Create repository from template':
 ![image](https://user-images.githubusercontent.com/3254549/88738761-42384800-d0ee-11ea-82e8-a2cd085b6f83.png)
-4. Clone the repository:
+4. Clone the repository on your local machine:
 ![image](https://user-images.githubusercontent.com/3254549/88739059-6e53c900-d0ee-11ea-9b25-56b2436a9817.png)
-5. You will need Node installed to build locally. Install Node dependencies: `npm install`.
-6. Set the environment variables
-```
- export ASTRA_DB_USERNAME = xxxx
- export ASTRA_DB_PASSWORD = xxxx
- export ASTRA_DB_KEYSPACE = xxxx
- export ASTRA_DB_ID = xxxx  #ex:4e62bc79-0e12-4667-bd7d-2191ece2a32c
- export ASTRA_DB_REGION = xxxx  #ex:us-east
- ```
-7. Build the app: `npm start`.
+5. `cd` to the cloned repository, and install Node dependencies: `npm install`.
+6. Find the values for the Astra variables from the Astra database dashboard. One exception is the `ASTRA_DB_ID` variable. It is the string in the URL after `https://astra.datastax.com/org/`. Set `ASTRA_DB_USERNAME`, `ASTRA_DB_PASSWORD`, `ASTRA_DB_KEYSPACE`, `ASTRA_DB_ID`, and `ASTRA_DB_REGION` environment variables using the shell command `export <ENV_VAR_NAME>=<value>.
+7. In the cloned repository, build the app: `npm start`.
 8. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
