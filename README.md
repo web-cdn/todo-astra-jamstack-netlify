@@ -23,7 +23,7 @@ Deploying a static web application on [Netlify](https://www.netlify.com/) allows
 3. [Deploy the app to Netlify](#deploying-to-netlify)
 
 ### Running on your local machine
-1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click 'Use this template' at the top of the README:
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
@@ -38,7 +38,7 @@ Deploying a static web application on [Netlify](https://www.netlify.com/) allows
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
 ### Running on Gitpod
-1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click the 'Open in Gitpod link':
 
@@ -56,7 +56,7 @@ You can find your database id here:
 ![image](https://user-images.githubusercontent.com/3254549/88744380-04422080-d0fc-11ea-93a1-fe40854f428c.png)
 
 ### Deploying to Netlify
-1. Create a [DataStax Astra](https://astra.datastax.com/register) Cassandra database (free tier):
+1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click the 'Deploy to Netlify' button:
 
