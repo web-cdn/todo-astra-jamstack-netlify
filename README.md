@@ -46,7 +46,7 @@ Deploying a static web application on [Netlify](https://www.netlify.com/) allows
 
 3. Wait for your Gitpod workspace to start:
 ![image](https://user-images.githubusercontent.com/3254549/88744125-5171c280-d0fb-11ea-9676-de4589e42589.png)
-4. Set your Astra credentials in the Gitpod terminal at the bottom of the screen:
+4. Set your Astra database details in the Gitpod terminal at the bottom of the screen:
 ![image](https://user-images.githubusercontent.com/3254549/88744148-64849280-d0fb-11ea-9b20-52d5226a14c6.png)
 You can find your database id in the Astra user-interface here:
 ![image](https://user-images.githubusercontent.com/3254549/88744238-a1508980-d0fb-11ea-83fc-6efc6b370780.png)
