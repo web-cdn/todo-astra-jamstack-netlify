@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function setupTable {
-
     if [[ -z "$ASTRA_DB_USERNAME" ]]; then
       echo "What is your Astra DB username? 🚀"
       read -r ASTRA_DB_USERNAME
@@ -55,8 +54,6 @@ function setupTable {
       --header 'content-type: application/json' \
       --header "x-cassandra-token: ${AUTH_TOKEN}" \
       --data '{"ifNotExists":true,"columnDefinitions":[{"static":false,"name":"list_id","typeDefinition":"text"},{"static":false,"name":"id","typeDefinition":"timeuuid"},{"static":false,"name":"title","typeDefinition":"text"},{"static":false,"name":"completed","typeDefinition":"boolean"}],"primaryKey":{"partitionKey":["list_id","id"]},"tableOptions":{"defaultTimeToLive":0,"clusteringExpression":[{"column":"id","order":"DESC"}]},"name":"todos"}')
-
-
 }
 
 setupTable
