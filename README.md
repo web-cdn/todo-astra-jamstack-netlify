@@ -58,7 +58,7 @@ You can find your database id in the Astra user-interface here:
 ### Deploying to Netlify
 1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
-2. Click the 'Deploy to Netlify' button:
+2. Once you have created both an Astra account and database, click the 'Deploy to Netlify' button:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/DataStax-Examples/todo-astra-jamstack-netlify)
 
