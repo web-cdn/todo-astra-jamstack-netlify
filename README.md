@@ -15,8 +15,6 @@ Once the Astra credentials are provided, the necessary tables are created in the
 
 [JAMstack](https://jamstack.org/) is a big leap forward in how we can write web applications that are easy to write, deploy, scale, and also maintain. Using this approach means that newly created content is rendered from a content API, while a static render of it is being built into the site for future.
 
-Deploying a static web application on [Netlify](https://www.netlify.com/) allows us to reaps the benefits and not having to rely on our own webserver; it will also handle the Astra user credentials for us.
-
 ## Getting Started Paths:
 1. [Run the app locally](#running-on-your-local-machine)
 2. [Run the app on Gitpod](#running-on-gitpod)
