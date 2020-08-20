@@ -9,14 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:phact/todo-astra-jamstack-netlify.git"
+    "url": "git+ssh://git@github.com:DataStax-Examlpes/todo-astra-jamstack-netlify.git"
   },
-  "author": "Gary Borton <gdborton@gmail.com>",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/phact/todo-astra-jamstack-netlify/issues"
+    "url": "https://github.com/DataStax-Examlpes/todo-astra-jamstack-netlify/issues"
   },
-  "homepage": "https://github.com/phact/todo-astra-jamstack-netlify#readme",
+  "homepage": "https://github.com/DataStax-Examlpes/todo-astra-jamstack-netlify#readme",
   "dependencies": {
     "classnames": "^2.2.5",
     "cross-fetch": "^3.0.5",
