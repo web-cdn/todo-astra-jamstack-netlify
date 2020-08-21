@@ -32,7 +32,9 @@ Once the Astra credentials are provided, the necessary tables are created in the
 5. `cd` to the cloned repository, and install Node dependencies: `npm install`.
 6. Populate your environment variables into a .env file
 
-```cp .env-template .env```
+```
+cp .env-template .env
+```
 
 and modify .env to include your database specific values (you can find these in the database detail screen in the Astra UI).
 
