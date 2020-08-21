@@ -30,7 +30,21 @@ Once the Astra credentials are provided, the necessary tables are created in the
 4. Clone the repository on your local machine:
 ![image](https://user-images.githubusercontent.com/3254549/88739059-6e53c900-d0ee-11ea-9b25-56b2436a9817.png)
 5. `cd` to the cloned repository, and install Node dependencies: `npm install`.
-6. Find the values for the Astra variables from the Astra database dashboard. One exception is the `ASTRA_DB_ID` variable. It is the string in the URL after `https://astra.datastax.com/org/`. Set `ASTRA_DB_USERNAME`, `ASTRA_DB_PASSWORD`, `ASTRA_DB_KEYSPACE`, `ASTRA_DB_ID`, and `ASTRA_DB_REGION` environment variables using the shell command `export <ENV_VAR_NAME>=<value>`.
+6. Populate your environment variables into a .env file
+
+    cp .env-template .env
+
+and modify .env to include your database specific values (you can find these in the database detail screen in the Astra UI).
+
+```
+ASTRA_DB_ID=REPLACE-ME
+ASTRA_DB_REGION=REPLACE-ME
+ASTRA_DB_KEYSPACE=REPLACE-ME
+ASTRA_DB_PASSWORD=REPLACE-ME
+ASTRA_DB_USERNAME=REPLACE-ME
+```
+
+
 7. In the cloned repository, build the app: `npm start`.
 8. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
