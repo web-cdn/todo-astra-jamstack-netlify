@@ -18,6 +18,8 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "cross-fetch": "^3.0.5",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^2.0.0",
     "ejs-webpack-loader": "^2.2.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",

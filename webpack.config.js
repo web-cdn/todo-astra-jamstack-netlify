@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+require('dotenv').config()
+
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
@@ -10,6 +13,7 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
+/*
 const {
   ASTRA_DB_USERNAME,
   ASTRA_DB_PASSWORD,
@@ -33,6 +37,7 @@ if (!ASTRA_DB_ID) {
 if (!ASTRA_DB_REGION) {
   throw new Error('Missing required environment variable, ASTRA_DB_REGION');
 }
+*/
 
 const clientConfig = {
   entry,
@@ -71,6 +76,7 @@ const clientConfig = {
   resolve,
   plugins: [
     // Copy all used resources (no dir available)
+    new Dotenv(),
     new HtmlWebpackPlugin({
         template: '!!ejs-webpack-loader!src/graphiql.ejs',
         filename: 'graphiql/index.html',
