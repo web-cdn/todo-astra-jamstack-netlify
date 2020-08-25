@@ -74,11 +74,6 @@ const clientConfig = {
   plugins: [
     // Copy all used resources (no dir available)
     new Dotenv(),
-    new HtmlWebpackPlugin({
-        template: '!!ejs-webpack-loader!src/graphiql.ejs',
-        filename: 'graphiql/index.html',
-
-    }),
     new CopyPlugin({
       patterns: [
         { from: "assets", to: "assets" },
