@@ -3,8 +3,7 @@ const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-require('dotenv').config()
-
+require('dotenv').config();
 
 const entry = './src/entry.jsx';
 const outputPath = path.resolve('./dist');
