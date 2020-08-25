@@ -35,7 +35,6 @@ class TodoApp extends React.Component {
     return fetch(`${API_ENDPOINT}/auth`, {
       method: 'POST',
       headers: {
-        accept: '*/*',
         'content-type': 'application/json',
       },
       body: JSON.stringify({
