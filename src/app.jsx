@@ -121,47 +121,9 @@ class TodoApp extends React.Component {
   }
 
   render() {
-    let footer, main
     const {todos, loading, sessionId, editing, newTodo} = this.state
     const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0)
     const completedCount = todos.length - activeTodoCount
-
-    if (activeTodoCount || completedCount) {
-      footer =
-        (<TodoFooter
-          count={activeTodoCount}
-          completedCount={completedCount}
-          nowShowing={this.props.location.pathname}
-          sessionId={sessionId}
-          onClearCompleted={() => this.clearCompleted()}
-        />)
-    }
-
-    if (todos.length) {
-      main = (
-        <section className="main">
-          <input
-            className="toggle-all"
-            type="checkbox"
-            onChange={this.toggleAll}
-            checked={activeTodoCount === 0}
-          />
-          <ul className="todo-list">
-            {
-              renderRoutes(this.props.route.routes, {
-                todos,
-                onToggle: todo => this.toggle(todo),
-                onDestroy: todo => this.destroy(todo),
-                onEdit: todo => this.edit(todo),
-                editing: todo => editing === todo.id,
-                onSave: (todo, text) => this.save(todo, text),
-                onCancel: () => this.cancel(),
-              })
-            }
-          </ul>
-        </section>
-      )
-    }
 
     return (
       <div>
@@ -180,8 +142,41 @@ class TodoApp extends React.Component {
             autoFocus
           />
         </header>
-        {main}
-        {footer}
+        { todos && todos.length ?
+          <section className="main">
+            <input
+              className="toggle-all"
+              type="checkbox"
+              onChange={this.toggleAll}
+              checked={activeTodoCount === 0}
+            />
+            <ul className="todo-list">
+              {
+                renderRoutes(this.props.route.routes, {
+                  todos,
+                  onToggle: todo => this.toggle(todo),
+                  onDestroy: todo => this.destroy(todo),
+                  onEdit: todo => this.edit(todo),
+                  editing: todo => editing === todo.id,
+                  onSave: (todo, text) => this.save(todo, text),
+                  onCancel: () => this.cancel(),
+                })
+              }
+            </ul>
+          </section>
+        :
+        null
+        }
+        { activeTodoCount || completedCount ?
+          <TodoFooter
+            count={activeTodoCount}
+            completedCount={completedCount}
+            nowShowing={this.props.location.pathname}
+            sessionId={sessionId}
+            onClearCompleted={() => this.clearCompleted()}
+          />
+        : null
+        }
       </div>
     )
   }

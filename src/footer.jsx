@@ -14,7 +14,6 @@ export default function Footer(props) {
   const {nowShowing, sessionId} = props;
   return (
     <footer className="footer">
-      
       <span className="todo-count">
         <strong>{props.count}</strong> {activeTodoWord} left
       </span>
