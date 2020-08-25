@@ -214,7 +214,7 @@ class TodoApp extends React.Component {
 
   render() {
     let footer, main;
-    const {todos} = this.state;
+    const {todos, loading, sessionId, editing, newTodo} = this.state;
     const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0);
     const completedCount = todos.length - activeTodoCount;
 
@@ -224,10 +224,8 @@ class TodoApp extends React.Component {
           count={activeTodoCount}
           completedCount={completedCount}
           nowShowing={this.props.location.pathname}
-          sessionId={this.state.sessionId}
-          onClearCompleted={() => {
-            this.clearCompleted();
-          }}
+          sessionId={sessionId}
+          onClearCompleted={() => this.clearCompleted()}
         />);
     }
 
@@ -247,7 +245,7 @@ class TodoApp extends React.Component {
                 onToggle: todo => this.toggle(todo),
                 onDestroy: todo => this.destroy(todo),
                 onEdit: todo => this.edit(todo),
-                editing: todo => this.state.editing === todo.id,
+                editing: todo => editing === todo.id,
                 onSave: (todo, text) => this.save(todo, text),
                 onCancel: () => this.cancel(),
               })
@@ -263,12 +261,12 @@ class TodoApp extends React.Component {
           <h1>
             <img alt={'Logo'} src={Logo}/>
             Astra todos
-            {this.state.loading > 0 ? <div className="spinner"/> : <span/>}
+            {loading > 0 ? <div className="spinner"/> : <span/>}
           </h1>
           <input
             className="new-todo"
             placeholder="What needs to be done?"
-            value={this.state.newTodo}
+            value={newTodo}
             onKeyDown={(event) => this.handleNewTodoKeyDown(event)}
             onChange={(event) => this.handleChange(event)}
             autoFocus
