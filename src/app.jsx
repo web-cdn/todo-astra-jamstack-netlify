@@ -1,9 +1,9 @@
 import React from 'react';
-import { renderRoutes } from 'react-router-config';
+import {renderRoutes} from 'react-router-config';
 import TodoFooter from './footer';
 import utils from './utils';
 import fetch from 'cross-fetch';
-import { Logo } from '../assets';
+import {Logo} from '../assets';
 import {
   ASTRA_DB_USERNAME,
   ASTRA_DB_PASSWORD,
@@ -27,7 +27,7 @@ class TodoApp extends React.Component {
   }
 
   loading(inc) {
-    this.setState({ loading: this.state.loading + inc })
+    this.setState({loading: this.state.loading + inc})
   }
 
   authAndLoadTodo() {
@@ -43,18 +43,18 @@ class TodoApp extends React.Component {
         password: ASTRA_DB_PASSWORD,
       }),
     }).then(res => res.json())
-        .then(response => {
-          this.setState( response );
-          this.loading(-1);
-          this.loadTodo()
-        }).catch(err => {
-          this.loading(-1);
-          console.error('Failed auth:', err)
-        });
+      .then(response => {
+        this.setState(response);
+        this.loading(-1);
+        this.loadTodo()
+      }).catch(err => {
+        this.loading(-1);
+        console.error('Failed auth:', err)
+      });
   }
 
   deleteTodo(todo) {
-    const { authToken } = this.state;
+    const {authToken} = this.state;
     this.loading(1);
     return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${todo.list_id};${todo.id}`, {
       method: 'DELETE',
@@ -63,19 +63,19 @@ class TodoApp extends React.Component {
         'x-cassandra-token': authToken,
       }
     }).then(res => res.json())
-        .then(response => {
-          this.loading(-1);
-        }).catch(err => {
-          this.loading(-1);
-          console.log(err);
-        });
+      .then(response => {
+        this.loading(-1);
+      }).catch(err => {
+        this.loading(-1);
+        console.log(err);
+      });
   }
 
   addTodo(todo) {
     if (!todo.id) {
       todo.id = utils.uuid();
     }
-    todo['list_id'] =  this.state.sessionId;
+    todo['list_id'] = this.state.sessionId;
     this.loading(1);
     const columns = {
       columns: Object.keys(todo).map(i => {
@@ -85,20 +85,19 @@ class TodoApp extends React.Component {
         }
       })
     };
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows` , {
+    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`, {
       method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-cassandra-token': this.state.authToken,
-        },
-        body: JSON.stringify(columns)
-      }).
-      then(res => res.json()).then(response => {
-        this.loading(-1)
-      }).catch(err => {
-        this.loading(-1);
-        console.error('Failed adding todo', err);
-      });
+      headers: {
+        'Content-Type': 'application/json',
+        'x-cassandra-token': this.state.authToken,
+      },
+      body: JSON.stringify(columns)
+    }).then(res => res.json()).then(response => {
+      this.loading(-1)
+    }).catch(err => {
+      this.loading(-1);
+      console.error('Failed adding todo', err);
+    });
   }
 
   updateTodo(todo) {
@@ -107,7 +106,7 @@ class TodoApp extends React.Component {
 
   loadTodo() {
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${this.state.sessionId}` , {
+    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${this.state.sessionId}`, {
       headers: {
         'x-cassandra-token': this.state.authToken,
       }
@@ -118,7 +117,7 @@ class TodoApp extends React.Component {
         } else {
           todos = todos.rows;
         }
-        this.setState({ todos });
+        this.setState({todos});
         this.loading(-1)
       }).catch(err => {
         this.loading(-1);
@@ -137,17 +136,17 @@ class TodoApp extends React.Component {
       utils.store('session-id', sid)
     }
     this.setState(
-        {
-          loading: 0, sessionId: sid
-        },
-        function () {
-          this.authAndLoadTodo()
-        },
+      {
+        loading: 0, sessionId: sid
+      },
+      function () {
+        this.authAndLoadTodo()
+      },
     )
   }
 
   handleChange(event) {
-    this.setState({ newTodo: event.target.value });
+    this.setState({newTodo: event.target.value});
   }
 
   handleNewTodoKeyDown(event) {
@@ -166,22 +165,22 @@ class TodoApp extends React.Component {
         completed: false
       }).then(() => {
         this.loadTodo().then(() => {
-          this.setState({ newTodo: '' })
+          this.setState({newTodo: ''})
         })
       });
     }
   }
 
   toggleAll(event) {
-    const { checked } = event.target;
+    const {checked} = event.target;
     Promise.all(this.state.todos.map(todo =>
-        this.updateTodo(Object.assign({}, todo, { completed: checked })))).then(() => {
+      this.updateTodo(Object.assign({}, todo, {completed: checked})))).then(() => {
       this.loadTodo();
     })
   }
 
   toggle(todo) {
-    this.updateTodo(Object.assign({}, todo, { completed: !todo.completed })).then(() => {
+    this.updateTodo(Object.assign({}, todo, {completed: !todo.completed})).then(() => {
       this.loadTodo();
     })
   }
@@ -191,18 +190,18 @@ class TodoApp extends React.Component {
   }
 
   edit(todo) {
-    this.setState({ editing: todo.id });
+    this.setState({editing: todo.id});
   }
 
   save(todo, text) {
-    this.updateTodo(Object.assign({}, todo, { title: text }))
-        .then(() => {
-          this.loadTodo().then(() => this.setState({ editing: null }));
-        })
+    this.updateTodo(Object.assign({}, todo, {title: text}))
+      .then(() => {
+        this.loadTodo().then(() => this.setState({editing: null}));
+      })
   }
 
   cancel() {
-    this.setState({ editing: null });
+    this.setState({editing: null});
   }
 
   clearCompleted() {
@@ -217,29 +216,31 @@ class TodoApp extends React.Component {
   render() {
     let footer;
     let main;
-    const { todos } = this.state;
+    const {todos} = this.state;
     const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0);
     const completedCount = todos.length - activeTodoCount;
 
     if (activeTodoCount || completedCount) {
       footer =
-          (<TodoFooter
-              count={activeTodoCount}
-              completedCount={completedCount}
-              nowShowing={this.props.location.pathname}
-              sessionId={this.state.sessionId}
-              onClearCompleted={() => { this.clearCompleted(); }}
-          />);
+        (<TodoFooter
+          count={activeTodoCount}
+          completedCount={completedCount}
+          nowShowing={this.props.location.pathname}
+          sessionId={this.state.sessionId}
+          onClearCompleted={() => {
+            this.clearCompleted();
+          }}
+        />);
     }
 
     if (todos.length) {
       main = (
         <section className="main">
           <input
-              className="toggle-all"
-              type="checkbox"
-              onChange={this.toggleAll}
-              checked={activeTodoCount === 0}
+            className="toggle-all"
+            type="checkbox"
+            onChange={this.toggleAll}
+            checked={activeTodoCount === 0}
           />
           <ul className="todo-list">
             {
@@ -259,25 +260,25 @@ class TodoApp extends React.Component {
     }
 
     return (
-        <div>
-          <header className="header">
-            <h1>
-              <img alt={'Logo'} src={Logo}/>
-              Astra todos
-              { this.state.loading > 0 ? <div className="spinner"/> : <span/> }
-            </h1>
-            <input
-                className="new-todo"
-                placeholder="What needs to be done?"
-                value={this.state.newTodo}
-                onKeyDown={(event) => this.handleNewTodoKeyDown(event)}
-                onChange={(event) => this.handleChange(event)}
-                autoFocus
-            />
-          </header>
-          {main}
-          {footer}
-        </div>
+      <div>
+        <header className="header">
+          <h1>
+            <img alt={'Logo'} src={Logo}/>
+            Astra todos
+            {this.state.loading > 0 ? <div className="spinner"/> : <span/>}
+          </h1>
+          <input
+            className="new-todo"
+            placeholder="What needs to be done?"
+            value={this.state.newTodo}
+            onKeyDown={(event) => this.handleNewTodoKeyDown(event)}
+            onChange={(event) => this.handleChange(event)}
+            autoFocus
+          />
+        </header>
+        {main}
+        {footer}
+      </div>
     );
   }
 }

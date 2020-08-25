@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import utils from './utils';
 import enums from './enums';
 
@@ -11,7 +11,7 @@ if (!PUBLIC_PATH.endsWith("/"))
 
 export default function Footer(props) {
   const activeTodoWord = utils.pluralize(props.count, 'item');
-  const { nowShowing, sessionId } = props;
+  const {nowShowing, sessionId} = props;
   return (
     <footer className="footer">
       
@@ -35,7 +35,7 @@ export default function Footer(props) {
         <li>
           <Link
             to={PUBLIC_PATH + "active"}
-            className={classNames({ selected: nowShowing.endsWith(enums.ACTIVE_TODOS) })}
+            className={classNames({selected: nowShowing.endsWith(enums.ACTIVE_TODOS)})}
           >
             Active
           </Link>
@@ -44,9 +44,9 @@ export default function Footer(props) {
         <li>
           <Link
             to={PUBLIC_PATH + "completed"}
-            className={classNames({ selected: nowShowing.endsWith(enums.COMPLETED_TODOS) })}
+            className={classNames({selected: nowShowing.endsWith(enums.COMPLETED_TODOS)})}
           >
-              Completed
+            Completed
           </Link>
         </li>
       </ul>

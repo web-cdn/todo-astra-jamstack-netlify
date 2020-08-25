@@ -50,7 +50,7 @@ export default class TodoItem extends React.Component {
     const val = this.state.editText.trim();
     if (val) {
       this.props.onSave(val);
-      this.setState({ editText: val });
+      this.setState({editText: val});
     } else {
       this.props.onDestroy();
     }
@@ -58,12 +58,12 @@ export default class TodoItem extends React.Component {
 
   handleEdit() {
     this.props.onEdit();
-    this.setState({ editText: this.props.todo.title });
+    this.setState({editText: this.props.todo.title});
   }
 
   handleKeyDown(event) {
     if (event.which === ESCAPE_KEY) {
-      this.setState({ editText: this.props.todo.title });
+      this.setState({editText: this.props.todo.title});
       this.props.onCancel(event);
     } else if (event.which === ENTER_KEY) {
       this.handleSubmit(event);
@@ -72,7 +72,7 @@ export default class TodoItem extends React.Component {
 
   handleChange(event) {
     if (this.props.editing) {
-      this.setState({ editText: event.target.value });
+      this.setState({editText: event.target.value});
     }
   }
 

@@ -1,5 +1,5 @@
 import App from './app';
-import { generateAsyncRouteComponent } from './rrv4Helpers';
+import {generateAsyncRouteComponent} from './rrv4Helpers';
 
 export default [
   {

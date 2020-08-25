@@ -1,12 +1,12 @@
 import React from 'react';
-import { matchRoutes } from 'react-router-config';
+import {matchRoutes} from 'react-router-config';
 
 /**
  * Returns a new React component, ready to be instantiated.
  * Note the closure here protecting Component, and providing a unique
  * instance of Component to the static implementation of `load`.
  */
-export function generateAsyncRouteComponent({ loader, Placeholder }) {
+export function generateAsyncRouteComponent({loader, Placeholder}) {
   let Component = null;
   return class AsyncRouteComponent extends React.Component {
     /**
@@ -43,7 +43,7 @@ export function generateAsyncRouteComponent({ loader, Placeholder }) {
     }
 
     render() {
-      const { Component: ComponentFromState } = this.state;
+      const {Component: ComponentFromState} = this.state;
       if (ComponentFromState) {
         return <ComponentFromState {...this.props} />;
       }
@@ -67,7 +67,7 @@ export function generateAsyncRouteComponent({ loader, Placeholder }) {
 export function ensureReady(routeConfig, providedLocation) {
   const matches = matchRoutes(routeConfig, providedLocation || location.pathname);
   return Promise.all(matches.map((match) => {
-    const { component } = match.route;
+    const {component} = match.route;
     if (component && component.load) {
       return component.load();
     }
