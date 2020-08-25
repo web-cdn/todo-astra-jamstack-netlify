@@ -213,8 +213,7 @@ class TodoApp extends React.Component {
   }
 
   render() {
-    let footer;
-    let main;
+    let footer, main;
     const {todos} = this.state;
     const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0);
     const completedCount = todos.length - activeTodoCount;
