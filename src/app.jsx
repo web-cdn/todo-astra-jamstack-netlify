@@ -17,17 +17,22 @@ class TodoApp extends React.Component {
   }
 
   componentDidMount() {
-    const params = new URLSearchParams(window.location.search)
-    let sid = params.get('session-id') || utils.store('session-id')
-
-    if (!sid) {
-      sid = utils.uuid()
-      utils.store('session-id', sid)
-    }
-    this.setState({
-        loading: false, sessionId: sid
-      }, () => this.loadTodos()
+    const sessionId = this.getSessionId()
+    this.setState({loading: false, sessionId}, () => this.loadTodos()
     )
+  }
+
+  getSessionId() {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('session-id')) {
+      return params.get('session-id')
+    }
+    if (utils.store('session-id')) {
+      return utils.store('session-id')
+    }
+    const sid = utils.uuid()
+    utils.store('session-id', sid)
+    return sid
   }
 
   toggleLoadingStatus() {
@@ -68,13 +73,13 @@ class TodoApp extends React.Component {
     if (event.keyCode !== 13) return
     event.preventDefault()
 
-    const val = this.state.newTodo.trim()
+    const title = this.state.newTodo.trim()
 
-    if (val) {
+    if (title) {
       await this.addTodo({
+        title,
         id: utils.uuid(),
-        title: val,
-        completed: false
+        completed: false,
       })
       await this.loadTodos()
       await this.setState({newTodo: ''})
