@@ -50,9 +50,9 @@ class TodoApp extends React.Component {
     this.setState({loading: this.state.loading + inc})
   }
 
-  authAndLoadTodo() {
+  async authAndLoadTodo() {
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/auth`, {
+    const response = await fetch(`${API_ENDPOINT}/auth`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -62,35 +62,25 @@ class TodoApp extends React.Component {
         password: ASTRA_DB_PASSWORD,
       }),
     }).then(res => res.json())
-      .then(response => {
-        this.setState(response);
-        this.loading(-1);
-        this.loadTodo()
-      }).catch(err => {
-        this.loading(-1);
-        console.error('Failed auth:', err)
-      });
+    this.setState(response);
+    this.loading(-1);
+    await this.loadTodo()
   }
 
-  deleteTodo(todo) {
+  async deleteTodo(todo) {
     const {authToken} = this.state;
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${todo.list_id};${todo.id}`, {
+    await fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${todo.list_id};${todo.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'x-cassandra-token': authToken,
       }
-    }).then(res => res.json())
-      .then(response => {
-        this.loading(-1);
-      }).catch(err => {
-        this.loading(-1);
-        console.log(err);
-      });
+    })
+    this.loading(-1)
   }
 
-  addTodo(todo) {
+  async addTodo(todo) {
     if (!todo.id) {
       todo.id = utils.uuid();
     }
@@ -104,51 +94,37 @@ class TodoApp extends React.Component {
         }
       })
     };
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`, {
+    await fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-cassandra-token': this.state.authToken,
       },
       body: JSON.stringify(columns)
-    }).then(res => res.json()).then(response => {
-      this.loading(-1)
-    }).catch(err => {
-      this.loading(-1);
-      console.error('Failed adding todo', err);
-    });
+    })
+    this.loading(-1)
   }
 
   updateTodo(todo) {
     return this.addTodo(todo);
   }
 
-  loadTodo() {
+  async loadTodo() {
     this.loading(1);
-    return fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${this.state.sessionId}`, {
+    const response = await fetch(`${API_ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${this.state.sessionId}`, {
       headers: {
         'x-cassandra-token': this.state.authToken,
       }
     }).then(res => res.json())
-      .then(todos => {
-        if (!todos.rows) {
-          todos = [];
-        } else {
-          todos = todos.rows;
-        }
-        this.setState({todos});
-        this.loading(-1)
-      }).catch(err => {
-        this.loading(-1);
-        console.error('Failed fetching todos', err);
-      });
+    this.setState({todos: !response.rows ? [] : response.rows})
+    this.loading(-1)
   }
 
   handleChange(event) {
     this.setState({newTodo: event.target.value});
   }
 
-  handleNewTodoKeyDown(event) {
+  async handleNewTodoKeyDown(event) {
     if (event.keyCode !== ENTER_KEY) {
       return;
     }
@@ -158,58 +134,52 @@ class TodoApp extends React.Component {
     const val = this.state.newTodo.trim();
 
     if (val) {
-      this.addTodo({
+      await this.addTodo({
         id: utils.uuid(),
         title: val,
         completed: false
-      }).then(() => {
-        this.loadTodo().then(() => {
-          this.setState({newTodo: ''})
-        })
-      });
+      })
+      await this.loadTodo()
+      await this.setState({newTodo: ''})
     }
   }
 
-  toggleAll(event) {
+  async toggleAll(event) {
     const {checked} = event.target;
-    Promise.all(this.state.todos.map(todo =>
-      this.updateTodo(Object.assign({}, todo, {completed: checked})))).then(() => {
-      this.loadTodo();
-    })
+    await Promise.all(this.state.todos.map(async todo =>
+      await this.updateTodo(Object.assign({}, todo, {completed: checked}))))
+    await this.loadTodo()
   }
 
-  toggle(todo) {
-    this.updateTodo(Object.assign({}, todo, {completed: !todo.completed})).then(() => {
-      this.loadTodo();
-    })
+  async toggle(todo) {
+    await this.updateTodo(Object.assign({}, todo, {completed: !todo.completed}))
+    await this.loadTodo()
   }
 
-  destroy(todo) {
-    this.deleteTodo(todo).then(() => this.loadTodo());
+  async destroy(todo) {
+    await this.deleteTodo(todo)
+    await this.loadTodo()
   }
 
   edit(todo) {
     this.setState({editing: todo.id});
   }
 
-  save(todo, text) {
-    this.updateTodo(Object.assign({}, todo, {title: text}))
-      .then(() => {
-        this.loadTodo().then(() => this.setState({editing: null}));
-      })
+  async save(todo, text) {
+    await this.updateTodo(Object.assign({}, todo, {title: text}))
+    await this.loadTodo()
+    await this.setState({editing: null})
   }
 
   cancel() {
     this.setState({editing: null});
   }
 
-  clearCompleted() {
+  async clearCompleted() {
     const todel = this.state.todos.filter(todo => todo.completed);
     const del = todel.map(todo => this.deleteTodo(todo));
-    Promise.all(del)
-      .then(() => {
-        this.loadTodo();
-      });
+    await Promise.all(del)
+    await this.loadTodo()
   }
 
   render() {
