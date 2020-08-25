@@ -13,7 +13,6 @@ const resolve = {
   extensions: ['.js', '.jsx'],
 };
 
-/*
 const {
   ASTRA_DB_USERNAME,
   ASTRA_DB_PASSWORD,
@@ -37,7 +36,6 @@ if (!ASTRA_DB_ID) {
 if (!ASTRA_DB_REGION) {
   throw new Error('Missing required environment variable, ASTRA_DB_REGION');
 }
-*/
 
 const clientConfig = {
   entry,

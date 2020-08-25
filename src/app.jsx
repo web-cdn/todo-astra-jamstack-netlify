@@ -113,7 +113,7 @@ class TodoApp extends React.Component {
       }
     }).then(res => res.json())
       .then(todos => {
-        if (JSON.stringify(todos).includes('no row found for primary key')) {
+        if (!todos.rows) {
           todos = [];
         } else {
           todos = todos.rows;
