@@ -26,6 +26,26 @@ class TodoApp extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // Reset initial loading
+
+    const params = new URLSearchParams(window.location.search);
+    let sid = params.get('session-id') || utils.store('session-id');
+
+    if (!sid) {
+      sid = utils.uuid()
+      utils.store('session-id', sid)
+    }
+    this.setState(
+      {
+        loading: 0, sessionId: sid
+      },
+      function () {
+        this.authAndLoadTodo()
+      },
+    )
+  }
+
   loading(inc) {
     this.setState({loading: this.state.loading + inc})
   }
@@ -122,26 +142,6 @@ class TodoApp extends React.Component {
         this.loading(-1);
         console.error('Failed fetching todos', err);
       });
-  }
-
-  componentDidMount() {
-    // Reset initial loading
-
-    const params = new URLSearchParams(window.location.search);
-    let sid = params.get('session-id') || utils.store('session-id');
-
-    if (!sid) {
-      sid = utils.uuid()
-      utils.store('session-id', sid)
-    }
-    this.setState(
-      {
-        loading: 0, sessionId: sid
-      },
-      function () {
-        this.authAndLoadTodo()
-      },
-    )
   }
 
   handleChange(event) {
