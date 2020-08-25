@@ -12,7 +12,7 @@ class TodoApp extends React.Component {
       editing: null,
       newTodo: '',
       todos: [],
-      loading: 1,
+      loading: true,
     }
   }
 
@@ -25,27 +25,27 @@ class TodoApp extends React.Component {
       utils.store('session-id', sid)
     }
     this.setState({
-        loading: 0, sessionId: sid
+        loading: false, sessionId: sid
       }, () => this.loadTodos()
     )
   }
 
-  loading(inc) {
+  toggleLoadingStatus() {
     const {loading} = this.state
-    this.setState({loading: loading + inc})
+    this.setState({loading: !loading})
   }
 
   async deleteTodo(todo) {
-    this.loading(1)
+    this.toggleLoadingStatus()
     await deleteTodo(todo)
-    this.loading(-1)
+    this.toggleLoadingStatus()
   }
 
   async addTodo(todo) {
     const {sessionId} = this.state
-    this.loading(1)
+    this.toggleLoadingStatus()
     await createTodo(todo, sessionId)
-    this.loading(-1)
+    this.toggleLoadingStatus()
   }
 
   updateTodo(todo) {
@@ -54,10 +54,10 @@ class TodoApp extends React.Component {
 
   async loadTodos() {
     const {sessionId} = this.state
-    this.loading(1)
+    this.toggleLoadingStatus()
     const response = await getTodos(sessionId)
     this.setState({todos: !response.rows ? [] : response.rows})
-    this.loading(-1)
+    this.toggleLoadingStatus()
   }
 
   handleChange(event) {
@@ -131,7 +131,7 @@ class TodoApp extends React.Component {
           <h1>
             <img alt={'Logo'} src={Logo}/>
             Astra todos
-            {loading > 0 ? <div className="spinner"/> : <span/>}
+            {loading ? <div className="spinner"/> : <span/>}
           </h1>
           <input
             className="new-todo"
@@ -142,7 +142,7 @@ class TodoApp extends React.Component {
             autoFocus
           />
         </header>
-        { todos && todos.length ?
+        {todos && todos.length ?
           <section className="main">
             <input
               className="toggle-all"
@@ -164,10 +164,10 @@ class TodoApp extends React.Component {
               }
             </ul>
           </section>
-        :
-        null
+          :
+          null
         }
-        { activeTodoCount || completedCount ?
+        {activeTodoCount || completedCount ?
           <TodoFooter
             count={activeTodoCount}
             completedCount={completedCount}
@@ -175,7 +175,7 @@ class TodoApp extends React.Component {
             sessionId={sessionId}
             onClearCompleted={() => this.clearCompleted()}
           />
-        : null
+          : null
         }
       </div>
     )
