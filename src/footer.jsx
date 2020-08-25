@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
-import utils from './utils';
+import utils from './utils/utils';
 import enums from './enums';
 
 let PUBLIC_PATH = process.env.PUBLIC_PATH || (typeof window !== 'undefined' ? window.location.pathname : '/')
@@ -51,12 +51,9 @@ export default function Footer(props) {
         </li>
       </ul>
       {
-        true ?
-          <button className="clear-completed" onClick={props.onClearCompleted}>
-            Clear
-          </button>
-          :
-          null
+        <button className="clear-completed" onClick={props.onClearCompleted}>
+          Clear
+        </button>
       }
       <div className="session">
         <a href={PUBLIC_PATH + "?session-id=" + sessionId} target="_blank">Share This List</a>
