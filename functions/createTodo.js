@@ -9,7 +9,6 @@ exports.handler = async (event, context) => {
   const { authToken } = await getAuthToken()
 
   try {
-    console.log(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`);
     const response = await fetch(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`, {
       method: 'POST',
       headers: {
@@ -19,10 +18,10 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         columns: body.columns
       })
-    }).then(res => res.json())
+    })
     return {
       statusCode: 200,
-      body: JSON.stringify(response)
+      body: JSON.stringify(response.json())
     }
   } catch (e) {
     return {
