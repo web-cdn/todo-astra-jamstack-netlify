@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/app.jsx",
   "scripts": {
-    "build": "sed -i s/:ASTRA_DB_ID:/${ASTRA_DB_ID}/g netlify.toml && sed -i s/:ASTRA_DB_REGION:/${ASTRA_DB_REGION}/g netlify.toml && webpack",
+    "build": "webpack",
     "dev": "webpack-dev-server --mode development",
     "start": "npm run dev"
   },
