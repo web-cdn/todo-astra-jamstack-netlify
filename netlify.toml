@@ -3,6 +3,14 @@
   functions = "functions/"
   command = "npm run build"
 
+[dev]
+  command = "yarn webpack-dev-server"
+  autoLaunch = true
+  port = 8888 # Port that the dev server will be listening on
+  targetPort = 8080 # Port of target app server
+  publish = "dist"
+  framework = "#custom"
+
 [template.environment]
   ASTRA_DB_USERNAME = "Your Astra DB Username"
   ASTRA_DB_PASSWORD = "Your Astra DB Password"
