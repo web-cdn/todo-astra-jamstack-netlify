@@ -1,8 +1,8 @@
-const fetch = require('cross-fetch')
-const getAuthToken = require('./utils/getAuthToken')
-const ENDPOINT = `https://${process.env.ASTRA_DB_ID}-${process.env.ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1`
-const ASTRA_DB_KEYSPACE = process.env.ASTRA_DB_KEYSPACE
-const TABLE_NAME = process.env.TABLE_NAME || 'jamstack_todos'
+const fetch = require('cross-fetch');
+const getAuthToken = require('./utils/getAuthToken');
+const ENDPOINT = `https://${process.env.ASTRA_DB_ID}-${process.env.ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v1`;
+const ASTRA_DB_KEYSPACE = process.env.ASTRA_DB_KEYSPACE;
+const TABLE_NAME = 'jamstack_todos';
 
 exports.handler = async (event, context) => {
   const { path } = event;
@@ -14,16 +14,16 @@ exports.handler = async (event, context) => {
       headers: {
         'x-cassandra-token': authToken
       }
-    }).then(res => res.json())
+    }).then(res => res.json());
 
     return {
       statusCode: 200,
       body: JSON.stringify(response)
-    }
+    };
   } catch (e) {
     return {
       statusCode: 400,
       body: JSON.stringify(e)
-    }
+    };
   }
 }
