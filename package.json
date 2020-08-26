@@ -6,6 +6,7 @@
     "build": "webpack",
     "start:dev": "netlify dev"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DataStax-Examlpes/todo-astra-jamstack-netlify.git"
