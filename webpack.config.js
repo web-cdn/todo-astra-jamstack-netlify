@@ -42,13 +42,10 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "assets", to: "assets" },
-        { from: "css", to: "css" },
-        { from: "public" },
-        { from: "index.html", to: "index.html", transform: (content) => {
-          return String(content).replace(/{{CDN}}\//g, "");
-        }
-      }
+        { from: 'assets', to: 'assets' },
+        { from: 'css', to: 'css' },
+        { from: 'public' },
+        { from: 'index.html' },
     ]}),
   ]
 };
