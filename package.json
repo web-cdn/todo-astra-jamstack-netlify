@@ -4,8 +4,7 @@
   "main": "src/app.jsx",
   "scripts": {
     "build": "webpack",
-    "dev": "netlify dev",
-    "start": "npm run dev"
+    "start:dev": "netlify dev"
   },
   "repository": {
     "type": "git",
