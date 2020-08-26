@@ -23,13 +23,18 @@ class TodoApp extends React.Component {
   }
 
   getSessionId() {
+    // Check if a session id query parameter exists
     const params = new URLSearchParams(window.location.search)
     if (params.get('session-id')) {
       return params.get('session-id')
     }
+
+    // Check if a session id is stored to local storage
     if (utils.store('session-id')) {
       return utils.store('session-id')
     }
+
+    // Otherwise, generate a new session id
     const sid = utils.uuid()
     utils.store('session-id', sid)
     return sid

@@ -14,11 +14,11 @@ exports.handler = async (event, context) => {
       headers: {
         'x-cassandra-token': authToken
       }
-    })
+    }).then(res => res.json())
 
     return {
       statusCode: 200,
-      body: JSON.stringify(response.json())
+      body: JSON.stringify(response)
     }
   } catch (e) {
     return {
