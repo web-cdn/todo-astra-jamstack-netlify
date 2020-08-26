@@ -2,23 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const entry = './src/entry.jsx';
-const outputPath = path.resolve('./dist');
-const publicPath = process.env.PUBLIC_PATH || '/';
-const resolve = {
-  extensions: ['.js', '.jsx'],
-};
-
-const clientConfig = {
-  entry,
+module.exports = {
+  entry: './src/entry.jsx',
   target: 'web',
-  devtool: process.env.NODE_ENV === 'production' ? 'nosource-source-map' : 'source-map',
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  devtool: 'source-map',
+  mode: process.env.NODE_ENV || 'development',
   output: {
-    path: outputPath,
+    path: path.resolve('./dist'),
     chunkFilename: '[name].bundle.js',
     filename: 'index.bundle.js',
-    publicPath,
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -43,9 +36,10 @@ const clientConfig = {
       }
     ]
   },
-  resolve,
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   plugins: [
-    // Copy all used resources (no dir available)
     new CopyPlugin({
       patterns: [
         { from: "assets", to: "assets" },
@@ -58,7 +52,3 @@ const clientConfig = {
     ]}),
   ]
 };
-
-module.exports = [
-  clientConfig,
-];
