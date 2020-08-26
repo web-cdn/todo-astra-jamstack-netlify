@@ -89,13 +89,13 @@ class TodoApp extends React.Component {
   async toggleAll(event) {
     const {checked} = event.target
     this.state.todos.map(async todo => {
-      await this.updateTodo(Object.assign({}, todo, {completed: checked}))
+      await this.updateTodo(Object.assign(todo, {completed: checked}))
     })
     await this.loadTodos()
   }
 
   async toggle(todo) {
-    await this.updateTodo(Object.assign({}, todo, {completed: !todo.completed}))
+    await this.updateTodo(Object.assign(todo, {completed: !todo.completed}))
     await this.loadTodos()
   }
 
@@ -109,7 +109,7 @@ class TodoApp extends React.Component {
   }
 
   async save(todo, text) {
-    await this.updateTodo(Object.assign({}, todo, {title: text}))
+    await this.updateTodo(Object.assign(todo, {title: text}))
     await this.loadTodos()
     await this.setState({editing: null})
   }
