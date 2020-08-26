@@ -45,9 +45,10 @@ class TodoApp extends React.Component {
     this.setState({loading: !loading})
   }
 
-  async deleteTodos(todo) {
+  async deleteTodos() {
+    const {sessionId}  = this.state
     this.toggleLoadingStatus()
-    await deleteTodos(todo)
+    await deleteTodos(sessionId)
     this.toggleLoadingStatus()
   }
 
@@ -104,11 +105,6 @@ class TodoApp extends React.Component {
     await this.loadTodos()
   }
 
-  async destroy(todo) {
-    await this.deleteTodos(todo)
-    await this.loadTodos()
-  }
-
   edit(todo) {
     this.setState({editing: todo.id})
   }
@@ -121,13 +117,6 @@ class TodoApp extends React.Component {
 
   cancel() {
     this.setState({editing: null})
-  }
-
-  async clearCompleted() {
-    const todel = this.state.todos.filter(todo => todo.completed)
-    const del = todel.map(todo => this.deleteTodos(todo))
-    await Promise.all(del)
-    await this.loadTodos()
   }
 
   render() {
@@ -165,7 +154,6 @@ class TodoApp extends React.Component {
                 renderRoutes(this.props.route.routes, {
                   todos,
                   onToggle: todo => this.toggle(todo),
-                  onDestroy: todo => this.destroy(todo),
                   onEdit: todo => this.edit(todo),
                   editing: todo => editing === todo.id,
                   onSave: (todo, text) => this.save(todo, text),
@@ -183,7 +171,7 @@ class TodoApp extends React.Component {
             completedCount={completedCount}
             nowShowing={this.props.location.pathname}
             sessionId={sessionId}
-            onClearCompleted={() => this.clearCompleted()}
+            onDeleteTodos={() => this.deleteTodos()}
           />
           : null
         }

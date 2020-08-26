@@ -4,6 +4,8 @@ const ENDPOINT = `https://${process.env.ASTRA_DB_ID}-${process.env.ASTRA_DB_REGI
 const ASTRA_DB_KEYSPACE = process.env.ASTRA_DB_KEYSPACE
 const TABLE_NAME = process.env.TABLE_NAME || 'jamstack_todos'
 
+// TODO: Add comments about being serverside and why we're using functions
+
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body)
   const { authToken } = await getAuthToken()

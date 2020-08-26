@@ -44,7 +44,7 @@ export default function Footer(props) {
         </li>
       </ul>
       {
-        <button className="clear-completed" onClick={props.onClearCompleted}>
+        <button className="clear-completed" onClick={props.onDeleteTodos}>
           Clear
         </button>
       }

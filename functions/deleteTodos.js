@@ -8,12 +8,12 @@ exports.handler = async (event, context) => {
   const body = JSON.parse(event.body)
   const { authToken } = await getAuthToken()
   try {
-    const response = await fetch(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${body.list_id};${body.id}`, {
+    const response = await fetch(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${body.sessionId}`, {
       method: 'DELETE',
       headers: {
         'x-cassandra-token': authToken,
       }
-    }).then(res => res.json())
+    });
     return {
       statusCode: 200,
       body: JSON.stringify(response)

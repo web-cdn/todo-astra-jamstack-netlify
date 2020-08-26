@@ -51,8 +51,6 @@ export default class TodoItem extends React.Component {
     if (val) {
       this.props.onSave(val);
       this.setState({editText: val});
-    } else {
-      this.props.onDestroy();
     }
   }
 
