@@ -1,6 +1,6 @@
 import utils from './utils'
 
-export const deleteTodo = async (todo) => {
+export const deleteTodos = async (todo) => {
   const response = await fetch('/.netlify/functions/deleteTodos', {
     body: JSON.stringify({todo}),
     method: 'POST'

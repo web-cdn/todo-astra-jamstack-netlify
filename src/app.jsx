@@ -3,7 +3,7 @@ import {renderRoutes} from 'react-router-config'
 import TodoFooter from './footer'
 import utils from './utils/utils'
 import {Logo} from '../assets'
-import {createTodo, deleteTodo, getTodos} from './utils/api'
+import {createTodo, deleteTodos, getTodos} from './utils/api'
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -40,9 +40,9 @@ class TodoApp extends React.Component {
     this.setState({loading: !loading})
   }
 
-  async deleteTodo(todo) {
+  async deleteTodos(todo) {
     this.toggleLoadingStatus()
-    await deleteTodo(todo)
+    await deleteTodos(todo)
     this.toggleLoadingStatus()
   }
 
@@ -100,7 +100,7 @@ class TodoApp extends React.Component {
   }
 
   async destroy(todo) {
-    await this.deleteTodo(todo)
+    await this.deleteTodos(todo)
     await this.loadTodos()
   }
 
@@ -120,7 +120,7 @@ class TodoApp extends React.Component {
 
   async clearCompleted() {
     const todel = this.state.todos.filter(todo => todo.completed)
-    const del = todel.map(todo => this.deleteTodo(todo))
+    const del = todel.map(todo => this.deleteTodos(todo))
     await Promise.all(del)
     await this.loadTodos()
   }
