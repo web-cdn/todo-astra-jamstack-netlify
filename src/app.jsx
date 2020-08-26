@@ -1,9 +1,9 @@
-import React from 'react'
-import {renderRoutes} from 'react-router-config'
-import TodoFooter from './footer'
-import utils from './utils/utils'
-import {Logo} from '../assets'
-import {createTodo, deleteTodos, getTodos} from './utils/api'
+import React from 'react';
+import {renderRoutes} from 'react-router-config';
+import TodoFooter from './footer';
+import utils from './utils/utils';
+import {Logo} from '../assets';
+import {createTodo, deleteTodos, getTodos} from './utils/api';
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -17,69 +17,68 @@ class TodoApp extends React.Component {
   }
 
   componentDidMount() {
-    const sessionId = this.getSessionId()
-    this.setState({loading: false, sessionId}, () => this.loadTodos()
-    )
+    const sessionId = this.getSessionId();
+    this.setState({loading: false, sessionId}, () => this.loadTodos())
   }
 
   getSessionId() {
     // Check if a session id query parameter exists
-    const params = new URLSearchParams(window.location.search)
+    const params = new URLSearchParams(window.location.search);
     if (params.get('session-id')) {
-      return params.get('session-id')
+      return params.get('session-id');
     }
 
     // Check if a session id is stored to local storage
     if (utils.store('session-id')) {
-      return utils.store('session-id')
+      return utils.store('session-id');
     }
 
     // Otherwise, generate a new session id
-    const sid = utils.uuid()
-    utils.store('session-id', sid)
-    return sid
+    const sid = utils.uuid();
+    utils.store('session-id', sid);
+    return sid;
   }
 
   toggleLoadingStatus() {
-    const {loading} = this.state
-    this.setState({loading: !loading})
+    const {loading} = this.state;
+    this.setState({loading: !loading});
   }
 
   async deleteTodos() {
-    const {sessionId}  = this.state
-    this.toggleLoadingStatus()
-    await deleteTodos(sessionId)
-    this.toggleLoadingStatus()
+    const {sessionId}  = this.state;
+    this.toggleLoadingStatus();
+    await deleteTodos(sessionId);
+    this.toggleLoadingStatus();
   }
 
   async addTodo(todo) {
-    const {sessionId} = this.state
-    this.toggleLoadingStatus()
-    await createTodo(todo, sessionId)
-    this.toggleLoadingStatus()
+    const {sessionId} = this.state;
+    this.toggleLoadingStatus();
+    await createTodo(todo, sessionId);
+    this.toggleLoadingStatus();
   }
 
   updateTodo(todo) {
-    return this.addTodo(todo)
+    return this.addTodo(todo);
   }
 
   async loadTodos() {
-    const {sessionId} = this.state
-    this.toggleLoadingStatus()
-    const response = await getTodos(sessionId)
-    this.setState({todos: !response.rows ? [] : response.rows})
-    this.toggleLoadingStatus()
+    const {sessionId} = this.state;
+    this.toggleLoadingStatus();
+    const response = await getTodos(sessionId);
+    this.setState({todos: !response.rows ? [] : response.rows});
+    this.toggleLoadingStatus();
   }
 
   handleChange(event) {
-    this.setState({newTodo: event.target.value})
+    this.setState({newTodo: event.target.value});
   }
 
   async handleNewTodoKeyDown(event) {
-    if (event.keyCode !== 13) return
-    event.preventDefault()
+    if (event.keyCode !== 13) return;
+    event.preventDefault();
 
-    const title = this.state.newTodo.trim()
+    const title = this.state.newTodo.trim();
 
     if (title) {
       await this.addTodo({
@@ -87,42 +86,42 @@ class TodoApp extends React.Component {
         id: utils.uuid(),
         completed: false,
       })
-      await this.loadTodos()
-      await this.setState({newTodo: ''})
+      await this.loadTodos();
+      await this.setState({newTodo: ''});
     }
   }
 
   async toggleAll(event) {
-    const {checked} = event.target
+    const {checked} = event.target;
     this.state.todos.map(async todo => {
-      await this.updateTodo(Object.assign(todo, {completed: checked}))
+      await this.updateTodo(Object.assign(todo, {completed: checked}));
     })
-    await this.loadTodos()
+    await this.loadTodos();
   }
 
   async toggle(todo) {
-    await this.updateTodo(Object.assign(todo, {completed: !todo.completed}))
+    await this.updateTodo(Object.assign(todo, {completed: !todo.completed}));
     await this.loadTodos()
   }
 
   edit(todo) {
-    this.setState({editing: todo.id})
+    this.setState({editing: todo.id});
   }
 
   async save(todo, text) {
-    await this.updateTodo(Object.assign(todo, {title: text}))
-    await this.loadTodos()
-    await this.setState({editing: null})
+    await this.updateTodo(Object.assign(todo, {title: text}));
+    await this.loadTodos();
+    await this.setState({editing: null});
   }
 
   cancel() {
-    this.setState({editing: null})
+    this.setState({editing: null});
   }
 
   render() {
-    const {todos, loading, sessionId, editing, newTodo} = this.state
-    const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0)
-    const completedCount = todos.length - activeTodoCount
+    const {todos, loading, sessionId, editing, newTodo} = this.state;
+    const activeTodoCount = todos.reduce((accum, todo) => (todo.completed ? accum : accum + 1), 0);
+    const completedCount = todos.length - activeTodoCount;
 
     return (
       <div>
@@ -180,4 +179,4 @@ class TodoApp extends React.Component {
   }
 }
 
-export default TodoApp
+export default TodoApp;
