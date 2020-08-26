@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 require('dotenv').config();
 
@@ -11,30 +10,6 @@ const publicPath = process.env.PUBLIC_PATH || '/';
 const resolve = {
   extensions: ['.js', '.jsx'],
 };
-
-const {
-  ASTRA_DB_USERNAME,
-  ASTRA_DB_PASSWORD,
-  ASTRA_DB_KEYSPACE,
-  ASTRA_DB_ID,
-  ASTRA_DB_REGION
-} = process.env;
-
-if (!ASTRA_DB_USERNAME) {
-  throw new Error('Missing required environment variable, ASTRA_DB_USERNAME');
-}
-if (!ASTRA_DB_PASSWORD) {
-  throw new Error('Missing required environment variable, ASTRA_DB_PASSWORD');
-}
-if (!ASTRA_DB_KEYSPACE) {
-  throw new Error('Missing required environment variable, ASTRA_DB_KEYSPACE');
-}
-if (!ASTRA_DB_ID) {
-  throw new Error('Missing required environment variable, ASTRA_DB_ID');
-}
-if (!ASTRA_DB_REGION) {
-  throw new Error('Missing required environment variable, ASTRA_DB_REGION');
-}
 
 const clientConfig = {
   entry,
@@ -93,24 +68,7 @@ const clientConfig = {
           }
         }
       ]}),
-    // During the build make literal replacements on client side for
-    // process.env.API_URL, because there is no process.env
-    new webpack.DefinePlugin({
-      'process.env.ASTRA_DB_USERNAME': JSON.stringify(process.env.ASTRA_DB_USERNAME),
-      'process.env.ASTRA_DB_PASSWORD': JSON.stringify(process.env.ASTRA_DB_PASSWORD),
-      'process.env.ASTRA_DB_KEYSPACE': JSON.stringify(process.env.ASTRA_DB_KEYSPACE),
-      'process.env.ASTRA_DB_ID': JSON.stringify(process.env.ASTRA_DB_ID),
-      'process.env.ASTRA_DB_REGION': JSON.stringify(process.env.ASTRA_DB_REGION)
-    }),
-  ],
-  devServer: {
-    proxy: {
-      '/api': {
-        target: `https://${process.env.ASTRA_DB_ID}-${process.env.ASTRA_DB_REGION}.apps.astra.datastax.com/`,
-        changeOrigin: true
-      }
-    }
-  }
+  ]
 };
 
 module.exports = [

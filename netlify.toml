@@ -9,9 +9,3 @@
   ASTRA_DB_KEYSPACE = "Your Astra DB Keyspace"
   ASTRA_DB_REGION = "Your Astra DB Region"
   ASTRA_DB_ID = "Your Astra DB ID"
-
-[[redirects]]
-  from = "/api/*"
-  to = "https://:ASTRA_DB_ID:-:ASTRA_DB_REGION:.apps.astra.datastax.com/api/:splat"
-  status = 200
-  force = true
