@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "main": "src/app.jsx",
   "scripts": {
-    "build": "sed -i s/:ASTRA_DB_ID:/${ASTRA_DB_ID}/g netlify.toml && sed -i s/:ASTRA_DB_REGION:/${ASTRA_DB_REGION}/g netlify.toml && webpack",
-    "dev": "webpack-dev-server --mode development",
-    "start": "npm run dev"
+    "build": "webpack",
+    "start:dev": "netlify dev"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DataStax-Examlpes/todo-astra-jamstack-netlify.git"
   },
   "bugs": {
-    "url": "https://github.com/DataStax-Examlpes/todo-astra-jamstack-netlify/issues"
+    "url": "https://github.com/DataStax-Examples/todo-astra-jamstack-netlify/issues"
   },
-  "homepage": "https://github.com/DataStax-Examlpes/todo-astra-jamstack-netlify#readme",
+  "homepage": "https://github.com/DataStax-Examples/todo-astra-jamstack-netlify#readme",
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
     "classnames": "^2.2.5",
     "cross-fetch": "^3.0.5",
     "dotenv": "^8.2.0",
@@ -31,14 +32,17 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
+    "@babel/core": "^7.11.4",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.4.1",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "copy-webpack-plugin": "^6.0.3",
     "image-webpack-loader": "^6.0.0",
-    "webpack": "^4.43.0",
+    "netlify-cli": "^2.59.1",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   }

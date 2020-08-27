@@ -1,11 +1,11 @@
-import { BrowserRouter, StaticRouter } from 'react-router-dom';
-import { hydrate } from 'react-dom';
+import {BrowserRouter, StaticRouter} from 'react-router-dom';
+import {hydrate} from 'react-dom';
 import React from 'react';
-import { renderRoutes } from 'react-router-config';
+import {renderRoutes} from 'react-router-config';
 
 import routes from './routes';
 
-import { convertCustomRouteConfig, ensureReady } from './rrv4Helpers';
+import {convertCustomRouteConfig, ensureReady} from './rrv4Helpers';
 
 const routeConfig = convertCustomRouteConfig(routes);
 
@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
     hydrate(
       (
         <BrowserRouter>
-          { renderRoutes(routeConfig, props) }
+          {renderRoutes(routeConfig, props)}
         </BrowserRouter>
       ),
       document.getElementsByClassName('todoapp')[0], // eslint-disable-line
