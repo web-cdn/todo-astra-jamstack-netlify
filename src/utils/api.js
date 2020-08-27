@@ -20,11 +20,11 @@ export const createTodo = async (todo, sessionId) => {
   todo['list_id'] = sessionId;
 
   const columns = {
-    columns: Object.keys(todo).map(i => {
+    columns: Object.keys(todo).map(key => {
       return {
-        name: i,
-        value: todo[i]
-      }
+        name: key,
+        value: todo[key]
+      };
     })
   };
   const response = await fetch('/.netlify/functions/createTodo', {
