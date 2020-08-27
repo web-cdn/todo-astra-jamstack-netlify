@@ -11,7 +11,6 @@ exports.handler = async (event, context) => {
     cachedToken = await getAuthToken();
   }
 
-
   try {
     const response = await fetch(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows`, {
       method: 'POST',
