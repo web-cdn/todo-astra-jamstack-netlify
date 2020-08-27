@@ -6,7 +6,7 @@ const TABLE_NAME = 'jamstack_todos';
 
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
-  const { authToken } = await getAuthToken();
+  const {authToken} = await getAuthToken();
   try {
     const response = await fetch(`${ENDPOINT}/keyspaces/${ASTRA_DB_KEYSPACE}/tables/${TABLE_NAME}/rows/${body.sessionId}`, {
       method: 'DELETE',

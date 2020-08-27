@@ -18,7 +18,7 @@ class TodoApp extends React.Component {
 
   componentDidMount() {
     const sessionId = this.getSessionId();
-    this.setState({loading: false, sessionId}, () => this.loadTodos())
+    this.setState({loading: false, sessionId}, () => this.loadTodos());
   }
 
   getSessionId() {
@@ -45,7 +45,7 @@ class TodoApp extends React.Component {
   }
 
   async deleteTodos() {
-    const {sessionId}  = this.state;
+    const {sessionId} = this.state;
     this.toggleLoadingStatus();
     await deleteTodos(sessionId);
     this.toggleLoadingStatus();
@@ -56,10 +56,6 @@ class TodoApp extends React.Component {
     this.toggleLoadingStatus();
     await createTodo(todo, sessionId);
     this.toggleLoadingStatus();
-  }
-
-  updateTodo(todo) {
-    return this.addTodo(todo);
   }
 
   async loadTodos() {
@@ -94,13 +90,13 @@ class TodoApp extends React.Component {
   async toggleAll(event) {
     const {checked} = event.target;
     this.state.todos.map(async todo => {
-      await this.updateTodo(Object.assign(todo, {completed: checked}));
+      await this.addTodo(Object.assign(todo, {completed: checked}));
     })
     await this.loadTodos();
   }
 
   async toggle(todo) {
-    await this.updateTodo(Object.assign(todo, {completed: !todo.completed}));
+    await this.addTodo(Object.assign(todo, {completed: !todo.completed}));
     await this.loadTodos()
   }
 
@@ -109,7 +105,7 @@ class TodoApp extends React.Component {
   }
 
   async save(todo, text) {
-    await this.updateTodo(Object.assign(todo, {title: text}));
+    await this.addTodo(Object.assign(todo, {title: text}));
     await this.loadTodos();
     await this.setState({editing: null});
   }
