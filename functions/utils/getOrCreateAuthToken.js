@@ -6,7 +6,7 @@ const ASTRA_DB_PASSWORD = process.env.ASTRA_DB_PASSWORD;
 /*
  * This global variable will persist across requests throughout the life of the lambda.
  * We only need to fetch a token for the first request
- * Lambda creates new containters when the original one expires or if there is high concurrency
+ * Lambda creates new containers when the original one expires or if there is high concurrency
  * in which case the new containers will have to fetch their own tokens.
  */
 let cachedToken;
