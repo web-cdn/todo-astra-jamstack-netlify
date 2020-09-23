@@ -1,7 +1,7 @@
 # JAMStack + Netlify + Astra + Cassandra Example 📒
 *10 minutes, Beginner*
 
-This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register) free tier database.
+This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) free tier database.
 
 This example interacts directly with the database from the [ReactJS](https://reactjs.org/) frontend and can be deployed to [Netlify](https://www.netlify.com/) for free with a few clicks.
 
@@ -26,7 +26,7 @@ Once the Astra credentials are provided, the necessary tables are created in the
 3. [Deploy the app to Netlify](#deploying-to-netlify)
 
 ### Running on your local machine
-1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
+1. Create a [DataStax Astra account](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Click 'Use this template' at the top of the README:
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
@@ -57,7 +57,7 @@ ASTRA_DB_USERNAME=REPLACE-ME
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
 ### Running on Gitpod
-1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
+1. Create a [DataStax Astra account](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Once you have created both an Astra account and database, click the 'Open in Gitpod' link:
 
@@ -75,7 +75,7 @@ You can find your database id in the Astra user-interface here:
 ![image](https://user-images.githubusercontent.com/3254549/88744380-04422080-d0fc-11ea-93a1-fe40854f428c.png)
 
 ### Deploying to Netlify
-1. Create a [DataStax Astra account](https://astra.datastax.com/register) and free-tier Cassandra database:
+1. Create a [DataStax Astra account](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) and free-tier Cassandra database:
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
 2. Once you have created both an Astra account and database, click the 'Deploy to Netlify' button:
 
