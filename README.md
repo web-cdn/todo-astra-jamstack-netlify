@@ -1,7 +1,7 @@
 # JAMStack + Netlify + Astra + Cassandra Example 📒
 *10 minutes, Beginner*
 
-This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) free tier database.
+This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register?utm_source=devplay&utm_medium=github&utm_campaign=todo-astra-jamstack-netlify) free tier database.
 
 This example interacts directly with the database from the [ReactJS](https://reactjs.org/) frontend and can be deployed to [Netlify](https://www.netlify.com/) for free with a few clicks.
 
