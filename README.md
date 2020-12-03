@@ -1,9 +1,9 @@
+<!--- STARTEXCLUDE --->
 # JAMStack + Netlify + Astra + Cassandra 📒
 *10 minutes, Beginner*
 
 This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register?utm_source=devplay&utm_medium=github&utm_campaign=todo-astra-jamstack-netlify) free tier database.
-
-This example interacts directly with the database from the [ReactJS](https://reactjs.org/) frontend and can be deployed to [Netlify](https://www.netlify.com/) for free with a few clicks.
+<!--- ENDEXCLUDE --->
 
 ![image](https://monosnap.com/image/Fv0yPAznbeNJD3vYlQfztME6yogzFT)
 
@@ -27,7 +27,9 @@ Once the Astra credentials are provided, the necessary tables are created in the
 
 ### Running on your local machine
 1. Create a [DataStax Astra account](https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=todo-astra-jamstack-netlify) and free-tier Cassandra database:
+<!--- STARTEXCLUDE --->
 ![image](https://user-images.githubusercontent.com/3254549/88737275-c938f080-d0ed-11ea-8273-f547da8ef9e6.png)
+<!--- ENDEXCLUDE --->
 2. Click 'Use this template' at the top of the README:
 ![image](https://user-images.githubusercontent.com/3254549/88738196-161cc700-d0ee-11ea-9bd4-b5389b19f4bb.png)
 3. Enter a repository name and click 'Create repository from template':
