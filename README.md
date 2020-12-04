@@ -103,10 +103,9 @@ ASTRA_DB_USERNAME=REPLACE-ME
 ![image](https://user-images.githubusercontent.com/3254549/88744148-64849280-d0fb-11ea-9b20-52d5226a14c6.png)
 
 
-You can find your database id in the Astra user-interface here:
+You can find your database id in the Astra user-interface under database summary:
 
-
-![image](https://user-images.githubusercontent.com/3254549/88744238-a1508980-d0fb-11ea-83fc-6efc6b370780.png)
+![Screen Shot 2020-12-04 at 8 54 03 AM](https://user-images.githubusercontent.com/69874632/101191274-521ce700-360e-11eb-9755-66179ff8a3b9.png)
 
 
 5. Click the 'Open browser' button in the bottom right of the screen:
@@ -142,11 +141,9 @@ You can find your database id in the Astra user-interface here:
 
 ![image](https://user-images.githubusercontent.com/3254549/88744704-fb9e1a00-d0fc-11ea-8d92-4182aed4499d.png)
 
+You can find your database id in the Astra user-interface under database summary:
 
-You can find your database id here in the Astra user-interface here:
-
-
-![image](https://user-images.githubusercontent.com/3254549/88744238-a1508980-d0fb-11ea-83fc-6efc6b370780.png)
+![Screen Shot 2020-12-04 at 8 54 03 AM](https://user-images.githubusercontent.com/69874632/101191274-521ce700-360e-11eb-9755-66179ff8a3b9.png)
 
 
 5. Click 'Save and Deploy':
