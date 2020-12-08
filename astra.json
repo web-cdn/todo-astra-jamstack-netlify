@@ -6,8 +6,7 @@
   "githubUrl": "https://github.com/DataStax-Examples/todo-astra-jamstack-netlify",
   "gitpodUrl": "https://dtsx.io/3gtADSq",
   "netlifyUrl": "https://dtsx.io/2EtfGty",
-  "vercelUrl": "",
-  "tags": [{ "name": "javascript" }],
+  "tags": [{ "name": "javascript" }, { "name": "REST API" }],
   "category": "apps",
   "priority": 2
 }
