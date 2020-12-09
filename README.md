@@ -1,6 +1,6 @@
 <!--- STARTEXCLUDE --->
 # JAMStack + Netlify + Astra + Cassandra 📒
-*10 minutes, Beginner, [Start Building](https://github.com/DataStax-Examples/todo-astra-jamstack-netlify/blob/master/INSTRUCTIONS.md)*
+*10 minutes, Beginner, [Start Building](https://github.com/DataStax-Examples/todo-astra-jamstack-netlify#prerequisites)*
 
 This is an example React To-Do application using a [DataStax Astra](https://astra.datastax.com/register?utm_source=devplay&utm_medium=github&utm_campaign=todo-astra-jamstack-netlify) free tier database.
 <!--- ENDEXCLUDE --->
@@ -16,7 +16,7 @@ Once the Astra credentials are provided, the necessary tables are created in the
 [JAMstack](https://jamstack.org/) is a big leap forward in how we can write web applications that are easy to write, deploy, scale, and also maintain. Using this approach means that newly created content is rendered from a content API, while a static render of it is being built into the site for future.
 
 ## Get Started
-To build and play with this app, follow the build instructions that are located here: [https://github.com/DataStax-Examples/todo-astra-jamstack-netlify/blob/master/INSTRUCTIONS.md](https://github.com/DataStax-Examples/todo-astra-jamstack-netlify/blob/master/INSTRUCTIONS.md)
+To build and play with this app, follow the build instructions that are located here: [https://github.com/DataStax-Examples/todo-astra-jamstack-netlify](https://github.com/DataStax-Examples/todo-astra-jamstack-netlify#prerequisites)
 
 <!--- STARTEXCLUDE --->
 # Running JAMStack + Netlify + Astra + Cassandra 
