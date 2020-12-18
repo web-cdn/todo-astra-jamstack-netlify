@@ -1,5 +1,5 @@
 {
-  "name": "JAMStack + Netlify + Astra + Cassandra ",
+  "name": "ToDo App using JAMStack, Netlify, and AstraDB",
   "description": "This is an example React To-Do application using a DataStax Astra free tier database.",
   "duration": "10 minutes",
   "skillLevel": "Beginner",
