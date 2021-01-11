@@ -81,7 +81,7 @@ ASTRA_DB_PASSWORD=REPLACE-ME
 ASTRA_DB_USERNAME=REPLACE-ME
 ```
 
-3. In the cloned repository, build the app: `npm start`.
+3. In the cloned repository, build the app: `npm start:dev`.
 
 4. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
