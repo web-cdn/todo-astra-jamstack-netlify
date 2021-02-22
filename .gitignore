@@ -4,6 +4,7 @@ dist/
 .serverless
 .idea/
 .env
+venv
 
 # Local Netlify folder
 .netlify
