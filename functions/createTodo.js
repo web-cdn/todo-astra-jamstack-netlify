@@ -19,6 +19,7 @@ exports.handler = async (event, context) => {
         }),
       }
     );
+    console.log(body.columns);
     return {
       statusCode: 200,
       body: JSON.stringify(await response.json()),

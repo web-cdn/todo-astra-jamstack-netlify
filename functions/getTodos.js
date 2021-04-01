@@ -15,6 +15,7 @@ exports.handler = async (event, context) => {
         },
       }
     );
+    console.log(sessionId);
     return {
       statusCode: 200,
       body: JSON.stringify(await response.json()),

@@ -86,9 +86,9 @@ ASTRA_DB_KEYSPACE=REPLACE-ME
 ASTRA_DB_APPLICATION_TOKEN=REPLACE-ME
 ```
 
-3. In the cloned repository, build the app: `npm start:dev`.
+1. In the cloned repository, build the app: `npm run dev`.
 
-4. Open http://localhost:8080 to view your application:
+2. Open http://localhost:8080 to view your application:
 ![image](https://user-images.githubusercontent.com/3254549/88739693-fdadac00-d0ef-11ea-9f95-d2ee643b5431.png)
 
 ### Running on Gitpod

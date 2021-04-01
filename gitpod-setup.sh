@@ -2,8 +2,8 @@
 
 function setupTable() {
   if [[ -z "$ASTRA_DB_APPLICATION_TOKEN" ]]; then
-    echo "What is your Astra DB Token? 🔒"
-    read -s ASTRA_DB_APPLICATION_TOKEN
+    echo "What is your Astra DB App Token? 🚀"
+    read -r ASTRA_DB_APPLICATION_TOKEN
     export ASTRA_DB_APPLICATION_TOKEN="${ASTRA_DB_APPLICATION_TOKEN// /}"
     gp env ASTRA_DB_APPLICATION_TOKEN="${ASTRA_DB_APPLICATION_TOKEN// /}" &>/dev/null
   fi

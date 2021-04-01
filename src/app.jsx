@@ -2,7 +2,7 @@ import React from 'react';
 import {renderRoutes} from 'react-router-config';
 import TodoFooter from './footer';
 import utils from './utils/utils';
-import {Logo} from '../assets';
+import {Logo} from './assets';
 import {createTodo, deleteTodos, getTodos} from './utils/api';
 
 class TodoApp extends React.Component {
