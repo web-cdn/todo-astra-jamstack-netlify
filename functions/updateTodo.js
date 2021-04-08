@@ -2,12 +2,13 @@ const { getCollection } = require("./utils/astraClient");
 
 exports.handler = async (event, context) => {
   const todos = await getCollection();
+  const body = JSON.parse(event.body);
+
   try {
-    const res = await todos.find({});
-    const formattedTodos = Object.keys(res).map((item) => res[item]);
+    const res = await todos.update(body.id, body);
     return {
       statusCode: 200,
-      body: JSON.stringify(formattedTodos),
+      body: JSON.stringify(res),
     };
   } catch (e) {
     return {

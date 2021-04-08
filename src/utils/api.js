@@ -1,35 +1,36 @@
-import utils from './utils';
+const getTodos = async () => {
+  const response = await fetch(`/.netlify/functions/getTodos`);
+  const todos = await response.json();
+  return todos.length ? todos : [];
+};
 
-export const deleteTodos = async (sessionId) => {
-  const response = await fetch('/.netlify/functions/deleteTodos', {
-    body: JSON.stringify({sessionId}),
-    method: 'POST'
-  })
+const createTodo = async (todo) => {
+  const response = await fetch("/.netlify/functions/createTodo", {
+    body: JSON.stringify(todo),
+    method: "POST",
+  });
   return response.json();
 };
 
-export const getTodos = async (sessionId) => {
-  const response = await fetch(`/.netlify/functions/getTodos/${sessionId}`);
+const updateTodo = async (todo) => {
+  const response = await fetch("/.netlify/functions/updateTodo", {
+    body: JSON.stringify(todo),
+    method: "PUT",
+  });
   return response.json();
 };
 
-export const createTodo = async (todo, sessionId) => {
-  if (!todo.id) {
-    todo.id = utils.uuid();
-  }
-  todo['list_id'] = sessionId;
-
-  const columns = {
-    columns: Object.keys(todo).map(key => {
-      return {
-        name: key,
-        value: todo[key]
-      };
-    })
-  };
-  const response = await fetch('/.netlify/functions/createTodo', {
-    body: JSON.stringify(columns),
-    method: 'POST'
-  })
+const deleteTodo = async (id) => {
+  const response = await fetch("/.netlify/functions/deleteTodo", {
+    body: JSON.stringify({ id }),
+    method: "POST",
+  });
   return response.json();
+};
+
+export default {
+  getTodos,
+  createTodo,
+  deleteTodo,
+  updateTodo,
 };
